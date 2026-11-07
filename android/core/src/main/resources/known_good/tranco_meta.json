@@ -1,0 +1,11 @@
+{
+    "source": "https://tranco-list.eu/list/GQ38K",
+    "list_id": "GQ38K",
+    "list_date": "2026-11-02",
+    "top_n": 100000,
+    "rows_read": 100000,
+    "dropped_public_suffix_or_invalid": 428,
+    "domains_written": 99572,
+    "psl_version": "2026-10-31_14-17-28_UTC",
+    "format": "N x int64 big-endian, sorted ascending (signed), = first 8 bytes of SHA-256(lowercase ASCII eTLD+1)"
+}

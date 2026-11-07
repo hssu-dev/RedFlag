@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "doc": "Source of truth for the Android Compose theme (android/app ui/theme). Colors are ARGB hex. Level colors are semantic and must stay distinguishable in both light and dark themes and for red/green color-blind users (they also differ in lightness and always come with an icon + label).",
+  "color": {
+    "light": {
+      "primary": "#FFD93025",
+      "onPrimary": "#FFFFFFFF",
+      "primaryContainer": "#FFFFDAD5",
+      "onPrimaryContainer": "#FF410001",
+      "secondary": "#FF5F5B71",
+      "onSecondary": "#FFFFFFFF",
+      "background": "#FFFBF8F6",
+      "onBackground": "#FF1C1B1F",
+      "surface": "#FFFFFFFF",
+      "onSurface": "#FF1C1B1F",
+      "surfaceVariant": "#FFF1ECEA",
+      "onSurfaceVariant": "#FF57524F",
+      "outline": "#FFD8D2CF",
+      "scrim": "#CC0B0B0F"
+    },
+    "dark": {
+      "primary": "#FFFF8A7A",
+      "onPrimary": "#FF5F1410",
+      "primaryContainer": "#FF7E2A22",
+      "onPrimaryContainer": "#FFFFDAD5",
+      "secondary": "#FFC9C3DC",
+      "onSecondary": "#FF312E41",
+      "background": "#FF121114",
+      "onBackground": "#FFE6E1E5",
+      "surface": "#FF1C1B1F",
+      "onSurface": "#FFE6E1E5",
+      "surfaceVariant": "#FF2A2829",
+      "onSurfaceVariant": "#FFCAC4C1",
+      "outline": "#FF4A4544",
+      "scrim": "#E6000000"
+    },
+    "level": {
+      "safe":     { "light": "#FF1E8E3E", "dark": "#FF6DD58C", "containerLight": "#FFE6F4EA", "containerDark": "#FF0F3D1E", "icon": "check_circle" },
+      "caution":  { "light": "#FFB06000", "dark": "#FFFFC46B", "containerLight": "#FFFEF3E0", "containerDark": "#FF4A3000", "icon": "warning" },
+      "danger":   { "light": "#FFD93025", "dark": "#FFFF8A7A", "containerLight": "#FFFCE8E6", "containerDark": "#FF5F1410", "icon": "dangerous" },
+      "critical": { "light": "#FFA50E0E", "dark": "#FFFF6B6B", "containerLight": "#FFFAD2CF", "containerDark": "#FF6B0A0A", "icon": "gpp_bad" },
+      "unknown":  { "light": "#FF5F6368", "dark": "#FFBDC1C6", "containerLight": "#FFF1F3F4", "containerDark": "#FF303134", "icon": "help" }
+    },
+    "cloud": { "light": "#FF1A73E8", "dark": "#FF8AB4F8", "doc": "Accent for the Cloud deep-analysis trace (distinct from level colors)." }
+  },
+  "typography": {
+    "fontFamily": "default",
+    "displayScore": { "size": 56, "lineHeight": 60, "weight": 700, "letterSpacing": -1.5 },
+    "headline": { "size": 26, "lineHeight": 32, "weight": 700, "letterSpacing": -0.3 },
+    "title": { "size": 18, "lineHeight": 24, "weight": 600, "letterSpacing": 0 },
+    "body": { "size": 16, "lineHeight": 24, "weight": 400, "letterSpacing": 0.1 },
+    "label": { "size": 13, "lineHeight": 18, "weight": 600, "letterSpacing": 0.4 },
+    "mono": { "size": 13, "lineHeight": 18, "weight": 500, "letterSpacing": 0 }
+  },
+  "shape": { "small": 10, "medium": 16, "large": 24, "pill": 999 },
+  "spacing": { "xxs": 4, "xs": 8, "s": 12, "m": 16, "l": 24, "xl": 32, "xxl": 48 },
+  "elevation": { "card": 1, "sheet": 3 },
+  "motion": {
+    "gaugeSweepMs": 900,
+    "gaugeEasing": "emphasizedDecelerate",
+    "stepEnterMs": 280,
+    "stepStaggerMs": 90,
+    "screenCrossfadeMs": 220,
+    "pulseMs": 1200
+  },
+  "gauge": { "strokeDp": 14, "sizeDp": 168, "startAngle": 135, "sweepAngle": 270 },
+  "badge": { "dotDp": 10, "pillHeightDp": 28 }
+}

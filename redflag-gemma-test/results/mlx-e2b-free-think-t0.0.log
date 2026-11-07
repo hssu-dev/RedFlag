@@ -1,0 +1,24 @@
+10 cases x 1 runs | mode=free-think-t0.0 | backend=openai | model=gemma-4-e2b-mlx
+
+dbs_phish                9.54s  PARSE FAIL (no_json)
+bakery_new_legit         8.50s  PARSE FAIL (no_json)
+fakeshop_nike           10.33s  PARSE FAIL (no_json)
+kr_parcel_smishing       9.55s  PARSE FAIL (no_json)
+injection_m365           8.85s  PARSE FAIL (no_json)
+saas_login_legit         7.55s  PARSE FAIL (no_json)
+crypto_seed_scam         8.63s  PARSE FAIL (no_json)
+tech_support_scam        7.98s  PARSE FAIL (no_json)
+event_tickets_legit      9.27s  PARSE FAIL (no_json)
+kr_catcafe_info          9.38s  PARSE FAIL (no_json)
+
+================================================================
+requests            10  (errors 0)
+JSON parsed         0/10 = 0%
+  clean output      0/10  (pure JSON, nothing around it)
+schema valid        0/10 = 0%
+field accuracy
+latency (s)         mean 8.96  median 9.06  max 10.33
+completion tokens   mean 899
+thinking observed   10/10  (0 means the server did not turn thinking on)
+
+raw results -> results/mlx-e2b-free-think-t0.0.jsonl

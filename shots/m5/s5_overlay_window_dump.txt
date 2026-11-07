@@ -1,0 +1,2 @@
+  Window #2 Window{1a984fa u0 dev.redflag.app}:
+    mAttrs={(0,0)(fillxfill) sim={adjust=pan} ty=ACCESSIBILITY_OVERLAY fmt=TRANSLUCENT

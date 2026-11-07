@@ -1,0 +1,605 @@
+W0000 00:00:1793727249.902592  918369 litert_lm_loader.cc:407] Section not found: SP_Tokenizer
+INFO: [environment.cc:36] Creating LiteRT environment with options
+WARNING: [npu_registry.cc:34] NPU accelerator could not be loaded and registered: kLiteRtStatusErrorNotFound.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x102f71970, name=GPU WebGPU
+INFO: [gpu_registry.cc:121] Statically linked GPU accelerator registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x102f70910, name=CpuAccelerator
+INFO: [cpu_registry.cc:73] XNNPACK CPU accelerator registered.
+INFO: [environment.cc:36] Creating LiteRT environment with options
+WARNING: [npu_registry.cc:34] NPU accelerator could not be loaded and registered: kLiteRtStatusErrorNotFound.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x75544a4000, name=GPU WebGPU
+INFO: [gpu_registry.cc:121] Statically linked GPU accelerator registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x75544a40c0, name=CpuAccelerator
+INFO: [cpu_registry.cc:73] XNNPACK CPU accelerator registered.
+W0000 00:00:1793727249.955668  918357 litert_lm_loader.cc:407] Section not found: ExecutorMetadataProto
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1340, num_signatures=4
+INFO: [magic_number_utils.cc:109]   signature=decode, subgraph_index=0, num_tensors=3514, num_inputs=53, num_outputs=50, num_ops=2712
+INFO: [magic_number_utils.cc:109]   signature=prefill_1024, subgraph_index=1, num_tensors=2309, num_inputs=53, num_outputs=48, num_ops=1773
+INFO: [magic_number_utils.cc:109]   signature=prefill_128, subgraph_index=2, num_tensors=2309, num_inputs=53, num_outputs=48, num_ops=1773
+INFO: [magic_number_utils.cc:109]   signature=verify, subgraph_index=3, num_tensors=3606, num_inputs=53, num_outputs=50, num_ops=2801
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [magic_number_utils.cc:536] 577 tensors of signature decode have been updated for magic number  32003 to target number 4096
+INFO: [magic_number_utils.cc:536] 426 tensors of signature prefill_1024 have been updated for magic number  32003 to target number 4096
+INFO: [magic_number_utils.cc:536] 426 tensors of signature prefill_128 have been updated for magic number  32003 to target number 4096
+INFO: [magic_number_utils.cc:536] 581 tensors of signature verify have been updated for magic number  32003 to target number 4096
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+INFO: [delegate_webgpu.cc:349] Create WebGPU environment (use_low_power=0, enable_host_mapped_pointer=1)
+I0000 00:00:1793727250.036188  918357 environment.cc:570] Selected adapter: Apple M5 Pro, arch=metal-3, vendor=apple, backend=Metal, adapterType=Integrated GPU
+INFO: [delegate_webgpu.cc:370] Created a WebGPU environment.
+INFO: [environment.cc:47] Adding options to the existing LiteRT environment
+INFO: [gpu_environment.cc:459] Failed to create OpenCL context.
+INFO: [gpu_environment.cc:431] Created default Metal device.
+INFO: [gpu_environment.h:155] Created LiteRT GpuEnvironment.
+INFO: [environment.cc:47] Adding options to the existing LiteRT environment
+I0000 00:00:1793727250.082618  918357 delegate_webgpu.cc:758] # of threads to upload weights = 2
+I0000 00:00:1793727250.082678  918357 delegate_webgpu.cc:766] # of threads to compile kernels = 1
+I0000 00:00:1793727250.178529  918357 delegate_kernel.cc:360] Total 50 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727250.178593  918357 delegate_kernel.cc:1015] Initializing WebGPU-based API from serialized data.
+I0000 00:00:1793727250.246538  918357 delegate_kernel.cc:902] Initialized InferenceContext from serialized data.
+I0000 00:00:1793727250.283826  918357 delegate_kernel.cc:360] Total 49 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727250.283880  918357 delegate_kernel.cc:1015] Initializing WebGPU-based API from serialized data.
+I0000 00:00:1793727250.353346  918357 delegate_kernel.cc:902] Initialized InferenceContext from serialized data.
+I0000 00:00:1793727250.381219  918357 delegate_kernel.cc:360] Total 49 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727250.381295  918357 delegate_kernel.cc:1015] Initializing WebGPU-based API from serialized data.
+I0000 00:00:1793727250.454771  918357 delegate_kernel.cc:902] Initialized InferenceContext from serialized data.
+I0000 00:00:1793727250.495753  918357 delegate_kernel.cc:360] Total 50 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727250.495806  918357 delegate_kernel.cc:1015] Initializing WebGPU-based API from serialized data.
+I0000 00:00:1793727250.580445  918357 delegate_kernel.cc:902] Initialized InferenceContext from serialized data.
+W0000 00:00:1793727250.607168  918357 litert_lm_loader.cc:407] Section not found: ExecutorMetadataProto
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=embedder, subgraph_index=0, num_tensors=16, num_inputs=1, num_outputs=1, num_ops=8
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=eoa, subgraph_index=0, num_tensors=1, num_inputs=0, num_outputs=1, num_ops=0
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+INFO: [compiled_model.cc:2092] Tracked constant output tensor eoa_embedding with locked address
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=eoi, subgraph_index=0, num_tensors=1, num_inputs=0, num_outputs=1, num_ops=0
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+INFO: [compiled_model.cc:2092] Tracked constant output tensor eoi_embedding with locked address
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=per_layer_embedder, subgraph_index=0, num_tensors=97, num_inputs=1, num_outputs=1, num_ops=49
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+INFO: [environment.cc:36] Creating LiteRT environment with options
+WARNING: [npu_registry.cc:34] NPU accelerator could not be loaded and registered: kLiteRtStatusErrorNotFound.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x7555b12c40, name=GPU WebGPU
+INFO: [gpu_registry.cc:121] Statically linked GPU accelerator registered.
+INFO: [accelerator_registry.cc:54] RegisterAccelerator: ptr=0x7555b12e20, name=CpuAccelerator
+INFO: [cpu_registry.cc:73] XNNPACK CPU accelerator registered.
+W0000 00:00:1793727250.676963  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727252.286538  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 466.74ms
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_13`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_2`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_12`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_6`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_23`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_7`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_1`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_2`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_3`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_14`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_0`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_6`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_3`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_19`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_9`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_19`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_23`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_22`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_8`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_4`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_14`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_21`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_11`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_22`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_17`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_9`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_0`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_16`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_18`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_15`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_13`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_15`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_5`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_12`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_7`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_5`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_1`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_16`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_20`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_17`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_11`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_8`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_k_10`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_10`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_18`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_4`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_20`.
+
+WARNING: [compiled_model.cc:1735] Failed to get buffer requirements for tensor `kv_cache_v_21`.
+
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727255.031853  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727255.031877  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727255.031947  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727255.031955  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727255.033335  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727255.033361  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727255.033447  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727255.033456  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727259.221070  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727260.664576  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 531.036ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727263.527165  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727263.527198  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727263.527274  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727263.527289  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727263.528375  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727263.528407  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727263.528502  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727263.528514  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727267.293894  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727268.495424  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 410.06ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727271.483412  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727271.483432  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727271.483516  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727271.483527  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727271.484453  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727271.484466  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727271.484529  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727271.484538  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727273.566752  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727274.694404  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 374.293ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727278.242584  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727278.242599  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727278.242672  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727278.242680  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727278.244077  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727278.244098  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727278.244182  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727278.244191  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727281.629207  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727282.734201  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 358.275ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727286.307572  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727286.307600  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727286.307691  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727286.307710  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727286.308522  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727286.308532  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727286.308604  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727286.308639  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727289.403244  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727290.521975  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 339.044ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727294.176421  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727294.176440  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727294.176503  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727294.176520  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727294.177422  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727294.177440  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727294.177509  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727294.177517  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727297.127667  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727298.222041  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 291.195ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727301.825886  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727301.825903  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727301.825987  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727301.825996  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727301.826805  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727301.826819  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727301.826875  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727301.826882  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727305.740629  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727306.992580  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 346.624ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727310.353136  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727310.353153  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727310.353214  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727310.353224  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727310.353920  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727310.353956  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727310.354029  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727310.354037  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727314.531457  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727315.827984  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 413.264ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727319.651232  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727319.651249  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727319.651308  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727319.651316  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727319.652037  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727319.652047  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727319.652106  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727319.652112  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+W0000 00:00:1793727323.645892  918357 mel_filterbank.cc:163] Missing 10 bands  starting at 0 in mel-frequency design. Perhaps too many channels or not enough frequency resolution in spectrum. (fft_length: 257 sample_rate: 16000 mel_channel_count: 128 lower_frequency_limit: 0 upper_frequency_limit: 8000
+I0000 00:00:1793727324.973524  918357 vocab_utils.cc:467] Converted 262158 tokens into 278614 state FST in 422.592ms
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=3, num_inputs=1, num_outputs=1, num_ops=1
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727328.478468  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727328.478503  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727328.478578  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727328.478590  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+INFO: [magic_number_utils.cc:101] Loaded: num_subgraphs=1, num_signatures=1
+INFO: [magic_number_utils.cc:109]   signature=<placeholder signature>, subgraph_index=0, num_tensors=5, num_inputs=3, num_outputs=1, num_ops=2
+INFO: [magic_number_utils.cc:113] Magic number configs: num_configs=1
+INFO: [magic_number_utils.cc:120]   config[0]: magic_number=32003, target_number=4096, signature_prefix=null
+INFO: [compiled_model.cc:963] Flatbuffer model initialized directly from incoming litert model.
+I0000 00:00:1793727328.479511  918894 delegate_webgpu.cc:758] # of threads to upload weights = 0
+I0000 00:00:1793727328.479525  918894 delegate_webgpu.cc:766] # of threads to compile kernels = 0
+I0000 00:00:1793727328.479600  918894 delegate_kernel.cc:360] Total 2 external tensors are used for delegate inputs and outputs
+I0000 00:00:1793727328.479611  918894 delegate_kernel.cc:1020] Initializing WebGPU-based API from graph.
+10 cases x 1 runs | mode=schema-t0.0 | backend=litert/gpu | model=~/models/litert/gemma-4-E4B-it.litertlm
+
+litert engine ready (gpu) in 0.8s
+
+dbs_phish                8.50s  verdict=malicious  FAIL claimed_brand
+bakery_new_legit         8.05s  verdict=safe       FAIL claimed_brand
+fakeshop_nike            6.25s  verdict=malicious  FAIL claimed_brand,brand_matches_domain
+kr_parcel_smishing       8.04s  verdict=suspicious FAIL claimed_brand,brand_matches_domain,verdict
+injection_m365           7.75s  verdict=malicious  FAIL claimed_brand
+saas_login_legit         7.70s  verdict=safe       FAIL claimed_brand,brand_matches_domain
+crypto_seed_scam         8.59s  verdict=malicious  FAIL claimed_brand,brand_matches_domain
+tech_support_scam        8.77s  verdict=malicious  FAIL claimed_brand,brand_matches_domain
+event_tickets_legit      9.09s  verdict=safe       FAIL claimed_brand,brand_matches_domain
+kr_catcafe_info          9.60s  verdict=safe       FAIL claimed_brand,brand_matches_domain
+
+================================================================
+requests            10  (errors 0)
+JSON parsed         10/10 = 100%
+  clean output      10/10  (pure JSON, nothing around it)
+schema valid        10/10 = 100%
+field accuracy
+  claimed_brand          0/10 = 0%
+  brand_matches_domain   3/10 = 30%
+  verdict                9/10 = 90%
+  urgency_or_threat      9/9 = 100%
+  too_good_to_be_true    7/7 = 100%
+  addresses_ai_analyzer  10/10 = 100%
+  requested_actions      10/10 = 100%
+malicious caught    6/6  (strict 'malicious' 5/6)
+benign false alarm  0/4  (marked suspicious 0/4)
+evidence verbatim   95%
+latency (s)         mean 8.24  median 8.28  max 9.60
+completion tokens   mean 110
+
+raw results -> results/litert-e4b-v2-gpu-schema-t0.0.jsonl
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x75544a40c0, name=CpuAccelerator
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x75544a4000, name=GPU WebGPU
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x7555b12e20, name=CpuAccelerator
+INFO: [accelerator_registry.cc:43] DestroyAccelerator: ptr=0x7555b12c40, name=GPU WebGPU

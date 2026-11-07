@@ -1,0 +1,496 @@
+{
+ "version": 1,
+ "doc": [
+  "Context analyzer catalog (docs/plans/context_analysis.md). Gemma never writes screen text: it only picks ids from here.",
+  "sources: Android package -> category (messenger | sms | mail | browser | qr | unknown) + display name. Unknown packages -> category unknown.",
+  "questions: U1-U4 with quick chips. A chip's `guided: true` means a call or message told the user to open the page (context_guided, decided by code, not Gemma).",
+  "Context only ADDS to the score (scoring_rules.json v4 context rules); every context step can be skipped."
+ ],
+ "categories": {
+  "messenger": {
+   "ko": "메신저",
+   "en": "a messenger"
+  },
+  "sms": {
+   "ko": "문자",
+   "en": "SMS"
+  },
+  "mail": {
+   "ko": "메일",
+   "en": "email"
+  },
+  "browser": {
+   "ko": "브라우저",
+   "en": "a browser"
+  },
+  "qr": {
+   "ko": "QR 코드",
+   "en": "a QR code"
+  },
+  "unknown": {
+   "ko": "알 수 없는 앱",
+   "en": "an unknown app"
+  }
+ },
+ "sources": [
+  {
+   "package": "com.kakao.talk",
+   "category": "messenger",
+   "name": {
+    "ko": "카카오톡",
+    "en": "KakaoTalk"
+   }
+  },
+  {
+   "package": "org.telegram.messenger",
+   "category": "messenger",
+   "name": {
+    "ko": "텔레그램",
+    "en": "Telegram"
+   }
+  },
+  {
+   "package": "org.telegram.messenger.web",
+   "category": "messenger",
+   "name": {
+    "ko": "텔레그램",
+    "en": "Telegram"
+   }
+  },
+  {
+   "package": "com.whatsapp",
+   "category": "messenger",
+   "name": {
+    "ko": "WhatsApp",
+    "en": "WhatsApp"
+   }
+  },
+  {
+   "package": "jp.naver.line.android",
+   "category": "messenger",
+   "name": {
+    "ko": "라인",
+    "en": "LINE"
+   }
+  },
+  {
+   "package": "org.thoughtcrime.securesms",
+   "category": "messenger",
+   "name": {
+    "ko": "Signal",
+    "en": "Signal"
+   }
+  },
+  {
+   "package": "com.facebook.orca",
+   "category": "messenger",
+   "name": {
+    "ko": "메신저",
+    "en": "Messenger"
+   }
+  },
+  {
+   "package": "com.instagram.android",
+   "category": "messenger",
+   "name": {
+    "ko": "인스타그램",
+    "en": "Instagram"
+   }
+  },
+  {
+   "package": "com.discord",
+   "category": "messenger",
+   "name": {
+    "ko": "디스코드",
+    "en": "Discord"
+   }
+  },
+  {
+   "package": "kr.co.quicket",
+   "category": "messenger",
+   "name": {
+    "ko": "번개장터",
+    "en": "Bunjang"
+   }
+  },
+  {
+   "package": "com.towneers.www",
+   "category": "messenger",
+   "name": {
+    "ko": "당근",
+    "en": "Karrot"
+   }
+  },
+  {
+   "package": "com.google.android.apps.messaging",
+   "category": "sms",
+   "name": {
+    "ko": "메시지",
+    "en": "Messages"
+   }
+  },
+  {
+   "package": "com.samsung.android.messaging",
+   "category": "sms",
+   "name": {
+    "ko": "메시지",
+    "en": "Messages"
+   }
+  },
+  {
+   "package": "com.android.mms",
+   "category": "sms",
+   "name": {
+    "ko": "메시지",
+    "en": "Messages"
+   }
+  },
+  {
+   "package": "com.google.android.gm",
+   "category": "mail",
+   "name": {
+    "ko": "Gmail",
+    "en": "Gmail"
+   }
+  },
+  {
+   "package": "com.samsung.android.email.provider",
+   "category": "mail",
+   "name": {
+    "ko": "이메일",
+    "en": "Email"
+   }
+  },
+  {
+   "package": "com.microsoft.office.outlook",
+   "category": "mail",
+   "name": {
+    "ko": "Outlook",
+    "en": "Outlook"
+   }
+  },
+  {
+   "package": "com.nhn.android.mail",
+   "category": "mail",
+   "name": {
+    "ko": "네이버 메일",
+    "en": "Naver Mail"
+   }
+  },
+  {
+   "package": "net.daum.android.mail",
+   "category": "mail",
+   "name": {
+    "ko": "Daum 메일",
+    "en": "Daum Mail"
+   }
+  },
+  {
+   "package": "com.android.chrome",
+   "category": "browser",
+   "name": {
+    "ko": "Chrome",
+    "en": "Chrome"
+   }
+  },
+  {
+   "package": "com.sec.android.app.sbrowser",
+   "category": "browser",
+   "name": {
+    "ko": "삼성 인터넷",
+    "en": "Samsung Internet"
+   }
+  },
+  {
+   "package": "com.nhn.android.search",
+   "category": "browser",
+   "name": {
+    "ko": "네이버",
+    "en": "Naver"
+   }
+  },
+  {
+   "package": "com.sec.android.app.camera",
+   "category": "qr",
+   "name": {
+    "ko": "카메라",
+    "en": "Camera"
+   }
+  },
+  {
+   "package": "com.google.android.GoogleCamera",
+   "category": "qr",
+   "name": {
+    "ko": "카메라",
+    "en": "Camera"
+   }
+  },
+  {
+   "package": "com.google.ar.lens",
+   "category": "qr",
+   "name": {
+    "ko": "Google 렌즈",
+    "en": "Google Lens"
+   }
+  }
+ ],
+ "auto_context_categories": [
+  "messenger",
+  "sms",
+  "mail"
+ ],
+ "reasons": {
+  "unexpected_payment": {
+   "ko": "결제를 요구하는 페이지",
+   "en": "a page asking for payment"
+  },
+  "used_trade_payment": {
+   "ko": "중고거래 결제 페이지",
+   "en": "a used-trade payment page"
+  },
+  "app_install": {
+   "ko": "앱 설치를 요구하는 페이지",
+   "en": "a page asking you to install an app"
+  },
+  "gov_or_refund": {
+   "ko": "기관·환급을 내세운 페이지",
+   "en": "a page claiming to be an authority or refund"
+  },
+  "investment": {
+   "ko": "투자를 권하는 페이지",
+   "en": "an investment page"
+  },
+  "account_threat": {
+   "ko": "계정 정지를 경고하는 페이지",
+   "en": "a page warning about your account"
+  },
+  "brand_unverifiable": {
+   "ko": "회사를 확인할 수 없는 페이지",
+   "en": "a page whose company can't be confirmed"
+  },
+  "delivery": {
+   "ko": "택배를 내세운 페이지",
+   "en": "a delivery page"
+  },
+  "other": {
+   "ko": "확인이 더 필요한 페이지",
+   "en": "a page that needs a closer look"
+  }
+ },
+ "consent": {
+  "title": {
+   "ko": "맥락을 분석해도 될까요?",
+   "en": "May RedFlag check the context?"
+  },
+  "body": {
+   "ko": "이 링크는 {app}에서 열렸어요. {reason}라서, 링크가 담긴 메시지와 앞뒤 대화 몇 개를 함께 보면 사기인지 더 정확히 알 수 있어요. 기기 안에서만 확인하고 저장하지 않아요.",
+   "en": "This link was opened from {app}. Because this is {reason}, the message with the link and a few messages around it can show whether it's a scam. Checked on this phone only, never stored."
+  },
+  "allow": {
+   "ko": "허용",
+   "en": "Allow"
+  },
+  "skip": {
+   "ko": "건너뛰기",
+   "en": "Skip"
+  },
+  "never": {
+   "ko": "다시 묻지 않기",
+   "en": "Don't ask again"
+  },
+  "needs_access": {
+   "ko": "알림 접근 권한이 있어야 대화를 볼 수 있어요.",
+   "en": "Notification access is needed to see the conversation."
+  },
+  "open_settings": {
+   "ko": "설정 열기",
+   "en": "Open settings"
+  }
+ },
+ "questions": {
+  "U1": {
+   "text": {
+    "ko": "이 링크를 어떻게 받게 됐나요?",
+    "en": "How did you get this link?"
+   },
+   "chips": [
+    {
+     "id": "stranger",
+     "label": {
+      "ko": "모르는 사람이 보냄",
+      "en": "A stranger sent it"
+     }
+    },
+    {
+     "id": "acquaintance",
+     "label": {
+      "ko": "아는 사람이 보냄",
+      "en": "Someone I know sent it"
+     }
+    },
+    {
+     "id": "org_claimed",
+     "label": {
+      "ko": "기관·회사라고 함",
+      "en": "It said it was a company/authority"
+     }
+    },
+    {
+     "id": "ad_search",
+     "label": {
+      "ko": "광고·검색",
+      "en": "An ad or search"
+     }
+    }
+   ]
+  },
+  "U2": {
+   "text": {
+    "ko": "이 사이트에서 무엇을 하려던 참이에요?",
+    "en": "What were you about to do on this site?"
+   },
+   "chips": [
+    {
+     "id": "track_parcel",
+     "label": {
+      "ko": "택배 조회",
+      "en": "Track a parcel"
+     }
+    },
+    {
+     "id": "pay",
+     "label": {
+      "ko": "결제·송금",
+      "en": "Pay or transfer"
+     }
+    },
+    {
+     "id": "login_verify",
+     "label": {
+      "ko": "로그인·본인확인",
+      "en": "Log in / verify"
+     }
+    },
+    {
+     "id": "refund_subsidy",
+     "label": {
+      "ko": "지원금·환급",
+      "en": "Subsidy / refund"
+     }
+    },
+    {
+     "id": "invest",
+     "label": {
+      "ko": "투자",
+      "en": "Invest"
+     }
+    }
+   ]
+  },
+  "U3": {
+   "text": {
+    "ko": "전화나 메시지로 이 사이트에 들어가라는 안내를 받았나요? 어떤 내용이었나요?",
+    "en": "Did a call or message tell you to open this site? What did it say?"
+   },
+   "chips": [
+    {
+     "id": "yes_call",
+     "label": {
+      "ko": "예, 전화로",
+      "en": "Yes, by phone"
+     },
+     "guided": true
+    },
+    {
+     "id": "yes_message",
+     "label": {
+      "ko": "예, 문자·메신저로",
+      "en": "Yes, by message"
+     },
+     "guided": true
+    },
+    {
+     "id": "no",
+     "label": {
+      "ko": "아니요",
+      "en": "No"
+     }
+    }
+   ]
+  },
+  "U4": {
+   "text": {
+    "ko": "중고거래 중이었나요? 상대가 뭐라고 했나요?",
+    "en": "Were you in a used-goods trade? What did the other person say?"
+   },
+   "chips": [
+    {
+     "id": "yes_trade",
+     "label": {
+      "ko": "예, 중고거래 중",
+      "en": "Yes, a used-goods trade"
+     }
+    },
+    {
+     "id": "no",
+     "label": {
+      "ko": "아니요",
+      "en": "No"
+     }
+    }
+   ]
+  }
+ },
+ "free_input": {
+  "title": {
+   "ko": "상황 직접 입력",
+   "en": "Describe the situation"
+  },
+  "hint": {
+   "ko": "받은 메시지를 붙여 넣거나 상황을 적어 주세요 (300자)",
+   "en": "Paste the message you got or describe what happened (300 chars)"
+  },
+  "send": {
+   "ko": "보내기",
+   "en": "Send"
+  },
+  "skip": {
+   "ko": "건너뛰기",
+   "en": "Skip"
+  },
+  "default_question": "U1"
+ },
+ "scenarios": {
+  "parcel_smishing": {
+   "ko": "택배 문자 사기",
+   "en": "parcel-text scam"
+  },
+  "used_trade_escrow": {
+   "ko": "중고거래 안전결제 사칭",
+   "en": "fake used-trade safe payment"
+  },
+  "gov_voice_phishing": {
+   "ko": "기관 사칭 전화 사기",
+   "en": "authority-impersonation call scam"
+  },
+  "investment_scam": {
+   "ko": "투자 사기",
+   "en": "investment scam"
+  },
+  "account_threat": {
+   "ko": "계정 정지 사칭",
+   "en": "fake account-suspension notice"
+  },
+  "romance_or_job": {
+   "ko": "로맨스·부업 사기",
+   "en": "romance or job scam"
+  }
+ },
+ "limits": {
+  "messages_before": 3,
+  "message_chars": 300,
+  "statement_chars": 300,
+  "notification_ttl_minutes": 30,
+  "buffer_size": 60
+ }
+}

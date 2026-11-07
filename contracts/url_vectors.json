@@ -1,0 +1,719 @@
+{
+ "version": 1,
+ "doc": [
+  "Gate test vectors. Run with known_good_fixture as the Tranco set (NOT the real 100k list) so results are deterministic, brand_domains.json and gate_lists.json from contracts/, an empty safe-verdict cache, and the bundled PSL (contracts/public_suffix_list.dat, private section included).",
+  "expect.host = normalized ASCII host (lowercase, punycode, no port/userinfo/trailing dot; IPv6 kept in brackets). registrable_domain = eTLD+1 by PSL incl. private rules, null for IPs/public suffixes/single labels.",
+  "Input without a scheme but with a dot and no spaces is treated as https://<input>. punycode/homoglyph are checked only when present in expect.",
+  "decision: pass | block | unknown | ignore. reasons: brand, tranco, cache | safe_browsing | unknown_domain, shortener, ugc, ip_host, no_registrable_domain | not_a_url, unsupported_scheme"
+ ],
+ "known_good_fixture": [
+  "google.com",
+  "wikipedia.org",
+  "github.com",
+  "straitstimes.com",
+  "dropbox.com",
+  "sharepoint.com",
+  "bit.ly",
+  "t.co",
+  "naver.me",
+  "forms.gle",
+  "github.io",
+  "vercel.app",
+  "web.app",
+  "pages.dev",
+  "appspot.com",
+  "googleapis.com",
+  "wixsite.com",
+  "firebaseapp.com",
+  "co.kr",
+  "backblazeb2.com",
+  "mybluehost.me",
+  "canva.site"
+ ],
+ "vectors": [
+  {
+   "id": "brand_naver",
+   "url": "https://www.naver.com/",
+   "expect": {
+    "host": "www.naver.com",
+    "registrable_domain": "naver.com",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "brand_naver_schemeless",
+   "url": "m.naver.com/news?id=1",
+   "expect": {
+    "host": "m.naver.com",
+    "registrable_domain": "naver.com",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "brand_upper",
+   "url": "HTTPS://WWW.NAVER.COM/Search",
+   "expect": {
+    "host": "www.naver.com",
+    "registrable_domain": "naver.com",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "brand_dbs_subdomain",
+   "url": "https://internet-banking.dbs.com.sg/IB/Welcome",
+   "expect": {
+    "host": "internet-banking.dbs.com.sg",
+    "registrable_domain": "dbs.com.sg",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "brand_gov_sg",
+   "url": "https://www.singpass.gov.sg/main",
+   "expect": {
+    "host": "www.singpass.gov.sg",
+    "registrable_domain": "singpass.gov.sg",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "tranco_wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Phishing",
+   "expect": {
+    "host": "en.wikipedia.org",
+    "registrable_domain": "wikipedia.org",
+    "decision": "pass",
+    "reason": "tranco"
+   }
+  },
+  {
+   "id": "tranco_port",
+   "url": "http://wikipedia.org:8080/x",
+   "expect": {
+    "host": "wikipedia.org",
+    "registrable_domain": "wikipedia.org",
+    "decision": "pass",
+    "reason": "tranco"
+   }
+  },
+  {
+   "id": "tranco_trailing_dot",
+   "url": "https://github.com./login",
+   "expect": {
+    "host": "github.com",
+    "registrable_domain": "github.com",
+    "decision": "pass",
+    "reason": "tranco"
+   }
+  },
+  {
+   "id": "tranco_default_port",
+   "url": "https://www.straitstimes.com:443/singapore",
+   "expect": {
+    "host": "www.straitstimes.com",
+    "registrable_domain": "straitstimes.com",
+    "decision": "pass",
+    "reason": "tranco"
+   }
+  },
+  {
+   "id": "fullwidth_host",
+   "url": "https://ｇｏｏｇｌｅ.com/",
+   "expect": {
+    "host": "google.com",
+    "registrable_domain": "google.com",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "google_docs_root",
+   "url": "https://docs.google.com/",
+   "expect": {
+    "host": "docs.google.com",
+    "registrable_domain": "google.com",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "google_drive_home",
+   "url": "https://drive.google.com/drive/my-drive",
+   "expect": {
+    "host": "drive.google.com",
+    "registrable_domain": "google.com",
+    "decision": "pass",
+    "reason": "brand"
+   }
+  },
+  {
+   "id": "dropbox_home",
+   "url": "https://www.dropbox.com/home",
+   "expect": {
+    "host": "www.dropbox.com",
+    "registrable_domain": "dropbox.com",
+    "decision": "pass",
+    "reason": "tranco"
+   }
+  },
+  {
+   "id": "subdomain_disguise",
+   "url": "https://google.com.evil.xyz/login",
+   "expect": {
+    "host": "google.com.evil.xyz",
+    "registrable_domain": "evil.xyz",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "subdomain_disguise_dbs",
+   "url": "https://www.dbs.com.sg.secure-login.top/",
+   "expect": {
+    "host": "www.dbs.com.sg.secure-login.top",
+    "registrable_domain": "secure-login.top",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "hyphen_disguise",
+   "url": "https://accounts-google.com/signin",
+   "expect": {
+    "host": "accounts-google.com",
+    "registrable_domain": "accounts-google.com",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "userinfo_trick",
+   "url": "https://google.com@evil.xyz/login",
+   "expect": {
+    "host": "evil.xyz",
+    "registrable_domain": "evil.xyz",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "userinfo_trick_pw",
+   "url": "https://www.naver.com:pw@phish.top/",
+   "expect": {
+    "host": "phish.top",
+    "registrable_domain": "phish.top",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "demo_dbs_phish",
+   "url": "https://dbs-secure-verify.top/login?ref=sms",
+   "expect": {
+    "host": "dbs-secure-verify.top",
+    "registrable_domain": "dbs-secure-verify.top",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "new_small_business",
+   "url": "https://hanaroombakery.sg/",
+   "expect": {
+    "host": "hanaroombakery.sg",
+    "registrable_domain": "hanaroombakery.sg",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "co_kr_unknown",
+   "url": "https://shop.example-mall.co.kr/item/1",
+   "expect": {
+    "host": "shop.example-mall.co.kr",
+    "registrable_domain": "example-mall.co.kr",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "idn_cyrillic_a",
+   "url": "https://www.аpple.com/",
+   "expect": {
+    "host": "www.xn--pple-43d.com",
+    "registrable_domain": "xn--pple-43d.com",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": true,
+    "homoglyph": true
+   }
+  },
+  {
+   "id": "idn_all_cyrillic",
+   "url": "https://аррӏе.com/",
+   "expect": {
+    "host": "xn--80ak6aa92e.com",
+    "registrable_domain": "xn--80ak6aa92e.com",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": true,
+    "homoglyph": true
+   }
+  },
+  {
+   "id": "idn_paypal",
+   "url": "https://pаypal.com/signin",
+   "expect": {
+    "host": "xn--pypal-4ve.com",
+    "registrable_domain": "xn--pypal-4ve.com",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": true,
+    "homoglyph": true
+   }
+  },
+  {
+   "id": "idn_already_punycode",
+   "url": "https://xn--pple-43d.com/",
+   "expect": {
+    "host": "xn--pple-43d.com",
+    "registrable_domain": "xn--pple-43d.com",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": true,
+    "homoglyph": true
+   }
+  },
+  {
+   "id": "idn_korean_legit",
+   "url": "https://테스트.한국/",
+   "expect": {
+    "host": "xn--9t4b11yi5a.xn--3e0b707e",
+    "registrable_domain": "xn--9t4b11yi5a.xn--3e0b707e",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": true,
+    "homoglyph": false
+   }
+  },
+  {
+   "id": "idn_german_legit",
+   "url": "https://münchen.de/",
+   "expect": {
+    "host": "xn--mnchen-3ya.de",
+    "registrable_domain": "xn--mnchen-3ya.de",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": true,
+    "homoglyph": false
+   }
+  },
+  {
+   "id": "ascii_not_punycode",
+   "url": "https://example-shop.com/",
+   "expect": {
+    "host": "example-shop.com",
+    "registrable_domain": "example-shop.com",
+    "decision": "unknown",
+    "reason": "unknown_domain",
+    "punycode": false,
+    "homoglyph": false
+   }
+  },
+  {
+   "id": "shortener_bitly",
+   "url": "https://bit.ly/3AbCdEf",
+   "expect": {
+    "host": "bit.ly",
+    "registrable_domain": "bit.ly",
+    "decision": "unknown",
+    "reason": "shortener"
+   }
+  },
+  {
+   "id": "shortener_upper",
+   "url": "HTTP://BIT.LY/x",
+   "expect": {
+    "host": "bit.ly",
+    "registrable_domain": "bit.ly",
+    "decision": "unknown",
+    "reason": "shortener"
+   }
+  },
+  {
+   "id": "shortener_naver",
+   "url": "https://naver.me/abc123",
+   "expect": {
+    "host": "naver.me",
+    "registrable_domain": "naver.me",
+    "decision": "unknown",
+    "reason": "shortener"
+   }
+  },
+  {
+   "id": "shortener_forms_gle",
+   "url": "https://forms.gle/AbC123",
+   "expect": {
+    "host": "forms.gle",
+    "registrable_domain": "forms.gle",
+    "decision": "unknown",
+    "reason": "shortener"
+   }
+  },
+  {
+   "id": "shortener_tco",
+   "url": "https://t.co/xyz",
+   "expect": {
+    "host": "t.co",
+    "registrable_domain": "t.co",
+    "decision": "unknown",
+    "reason": "shortener"
+   }
+  },
+  {
+   "id": "psl_github_io",
+   "url": "https://dbs-login.github.io/verify",
+   "expect": {
+    "host": "dbs-login.github.io",
+    "registrable_domain": "dbs-login.github.io",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "psl_github_io_bare",
+   "url": "https://github.io/",
+   "expect": {
+    "host": "github.io",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "no_registrable_domain"
+   }
+  },
+  {
+   "id": "psl_vercel",
+   "url": "https://secure-dbs.vercel.app/",
+   "expect": {
+    "host": "secure-dbs.vercel.app",
+    "registrable_domain": "secure-dbs.vercel.app",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "psl_web_app",
+   "url": "https://wallet-sync.web.app/connect",
+   "expect": {
+    "host": "wallet-sync.web.app",
+    "registrable_domain": "wallet-sync.web.app",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "psl_pages_dev",
+   "url": "https://docusign-envelope-7731.pages.dev/",
+   "expect": {
+    "host": "docusign-envelope-7731.pages.dev",
+    "registrable_domain": "docusign-envelope-7731.pages.dev",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "psl_firebaseapp_deep",
+   "url": "https://a.b.my-app.firebaseapp.com/",
+   "expect": {
+    "host": "a.b.my-app.firebaseapp.com",
+    "registrable_domain": "my-app.firebaseapp.com",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "psl_icann_bare",
+   "url": "https://co.kr/",
+   "expect": {
+    "host": "co.kr",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "no_registrable_domain"
+   }
+  },
+  {
+   "id": "ugc_google_forms",
+   "url": "https://docs.google.com/forms/d/e/1FAIpQLSf/viewform",
+   "expect": {
+    "host": "docs.google.com",
+    "registrable_domain": "google.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_google_doc",
+   "url": "https://docs.google.com/document/d/1abc/edit",
+   "expect": {
+    "host": "docs.google.com",
+    "registrable_domain": "google.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_google_sites",
+   "url": "https://sites.google.com/view/dbs-verify",
+   "expect": {
+    "host": "sites.google.com",
+    "registrable_domain": "google.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_drive_file",
+   "url": "https://drive.google.com/file/d/1abc/view",
+   "expect": {
+    "host": "drive.google.com",
+    "registrable_domain": "google.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_sharepoint",
+   "url": "https://contoso.sharepoint.com/:x:/s/Finance/Eabc",
+   "expect": {
+    "host": "contoso.sharepoint.com",
+    "registrable_domain": "sharepoint.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_dropbox_share",
+   "url": "https://www.dropbox.com/scl/fi/abc/Invoice.pdf",
+   "expect": {
+    "host": "www.dropbox.com",
+    "registrable_domain": "dropbox.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_storage_googleapis",
+   "url": "https://storage.googleapis.com/bucket/index.html",
+   "expect": {
+    "host": "storage.googleapis.com",
+    "registrable_domain": "storage.googleapis.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_wixsite",
+   "url": "https://shop123.wixsite.com/sale",
+   "expect": {
+    "host": "shop123.wixsite.com",
+    "registrable_domain": "shop123.wixsite.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "sb_test_phishing",
+   "url": "https://testsafebrowsing.appspot.com/s/phishing.html",
+   "expect": {
+    "host": "testsafebrowsing.appspot.com",
+    "registrable_domain": "testsafebrowsing.appspot.com",
+    "decision": "block",
+    "reason": "safe_browsing"
+   }
+  },
+  {
+   "id": "sb_test_malware_http",
+   "url": "http://testsafebrowsing.appspot.com/s/malware.html",
+   "expect": {
+    "host": "testsafebrowsing.appspot.com",
+    "registrable_domain": "testsafebrowsing.appspot.com",
+    "decision": "block",
+    "reason": "safe_browsing"
+   }
+  },
+  {
+   "id": "sb_test_index_not_hit",
+   "url": "https://testsafebrowsing.appspot.com/",
+   "expect": {
+    "host": "testsafebrowsing.appspot.com",
+    "registrable_domain": "testsafebrowsing.appspot.com",
+    "decision": "unknown",
+    "reason": "unknown_domain"
+   }
+  },
+  {
+   "id": "sb_demo_domain",
+   "url": "https://www.free-gift-claim-sg.top/claim",
+   "expect": {
+    "host": "www.free-gift-claim-sg.top",
+    "registrable_domain": "free-gift-claim-sg.top",
+    "decision": "block",
+    "reason": "safe_browsing"
+   }
+  },
+  {
+   "id": "ip_v4",
+   "url": "http://192.168.0.1/login",
+   "expect": {
+    "host": "192.168.0.1",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "ip_host"
+   }
+  },
+  {
+   "id": "ip_v4_port",
+   "url": "http://10.0.2.2:8080/bank/",
+   "expect": {
+    "host": "10.0.2.2",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "ip_host"
+   }
+  },
+  {
+   "id": "ip_v6",
+   "url": "http://[2001:db8::1]:8080/",
+   "expect": {
+    "host": "[2001:db8::1]",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "ip_host"
+   }
+  },
+  {
+   "id": "ip_decimal",
+   "url": "http://3232235521/",
+   "expect": {
+    "host": "3232235521",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "ip_host"
+   }
+  },
+  {
+   "id": "localhost",
+   "url": "http://localhost:8000/",
+   "expect": {
+    "host": "localhost",
+    "registrable_domain": null,
+    "decision": "unknown",
+    "reason": "no_registrable_domain"
+   }
+  },
+  {
+   "id": "not_a_url_search",
+   "url": "how to cook rice",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "not_a_url"
+   }
+  },
+  {
+   "id": "scheme_chrome",
+   "url": "chrome://newtab/",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "unsupported_scheme"
+   }
+  },
+  {
+   "id": "scheme_about",
+   "url": "about:blank",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "unsupported_scheme"
+   }
+  },
+  {
+   "id": "scheme_file",
+   "url": "file:///sdcard/Download/x.html",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "unsupported_scheme"
+   }
+  },
+  {
+   "id": "scheme_javascript",
+   "url": "javascript:alert(1)",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "unsupported_scheme"
+   }
+  },
+  {
+   "id": "scheme_intent",
+   "url": "intent://scan/#Intent;scheme=zxing;end",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "unsupported_scheme"
+   }
+  },
+  {
+   "id": "empty",
+   "url": "",
+   "expect": {
+    "host": null,
+    "registrable_domain": null,
+    "decision": "ignore",
+    "reason": "not_a_url"
+   }
+  },
+  {
+   "id": "ugc_backblaze_b2_file",
+   "url": "https://f005.backblazeb2.com/file/dreyoop1218y/SignintoXfinity.html?entity=1073444",
+   "expect": {
+    "host": "f005.backblazeb2.com",
+    "registrable_domain": "backblazeb2.com",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_bluehost_temp_site",
+   "url": "http://website-d8644cc4.svf.kaf.mybluehost.me/",
+   "expect": {
+    "host": "website-d8644cc4.svf.kaf.mybluehost.me",
+    "registrable_domain": "mybluehost.me",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  },
+  {
+   "id": "ugc_canva_site",
+   "url": "https://promo-event.canva.site/",
+   "expect": {
+    "host": "promo-event.canva.site",
+    "registrable_domain": "canva.site",
+    "decision": "unknown",
+    "reason": "ugc"
+   }
+  }
+ ]
+}

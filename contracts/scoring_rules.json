@@ -1,0 +1,930 @@
+{
+  "version": 4,
+  "doc": [
+    "Shared by android/core (Kotlin) and backend (Python). Both MUST pass contracts/scoring_vectors.json.",
+    "INPUT: { registrable_domain, features (lite|cloud|null), signals {safe_browsing, domain_age_days, punycode, homoglyph, forms[{action_domain, same_site, fields[{type,label,name?,autocomplete?}] | sensitive_fields[]}], hidden_text?, data_endpoints?[url]}, cloaking_suspected, features_repaired, core_fields_repaired, analysis_incomplete, form_destination?, form_destination_domain?, context? {scenario, consistency, sender_risk, guided, evidence[]} }",
+    "FACTS are computed from INPUT exactly as described in `facts`. Unknown/missing values are null. Rules are boolean expressions over facts:",
+    "  {fact: f} -> f === true | {eq: [f, v]} | {lt: [f, n]} (false if f is not a number) | {has: [f, v]} (f is a list containing v) | {not_null: f} | {all: [..]} | {any: [..]} | {not: e}",
+    "SCORE: sum of `add` weights, clamp to [score.min, score.max]; then each fired `clamp` rule limits the score to [rule.min, rule.max] (in rule order); then each fired `floor` rule raises score to at least its value (floors beat clamps). LEVEL: highest levels[] entry with min <= score. ESCALATE: escalation.min <= score <= escalation.max.",
+    "RED_FLAGS: fired rules ordered floors first, then add rules by weight desc, then clamp rules; ties by rule order. clamp flags carry weight 0. source: rule.source 'model' -> 'gemma+rule' (lite) / 'opus+rule' (cloud); 'signal' -> 'signal+rule'.",
+    "TEMPLATES: {name} is replaced by the fact value (lists joined with ', '). If any placeholder in an evidence template is null/empty, evidence = null.",
+    "HEADLINE: if level ranks below headline_min_level -> headline_by_level[level]; else the first rule id in headline_priority that fired (template-filled), else headline_by_level[level].",
+    "v2 (2026-11-04 user decision): + brand_mismatch_sensitive_request (+20), secret_code_requested 15->25, clamp rules model_output_repaired [30,59] (repaired model output can never be safe, at most caution) and analysis_incomplete [30,100] (an unfinished analysis can never be safe).",
+    "v3 (2026-11-04 user decisions): model_output_repaired is a lower bound only (clamp [30,100], no upper bound) and applies only when a core field (claimed_brand, brand_matches_domain, requested_actions) was repaired OR a deterministic signal is not clean; hidden_ai_instruction_detected adds 30 from deterministic hidden-text patterns when the model did not set addresses_ai_analyzer.",
+    "v4 (2026-11-04 user-approved plans docs/plans/form_destination_observation.md + context_analysis.md): data destinations observed by code (signals.data_endpoints matched against data_destinations: messenger_bot +35, form_service + sensitive +30), Gemma's destination relation (form_destination == unrelated + personal data +20), and context rules (scenario +25, mismatch +20, call/message-guided app install floor 85, unknown/impersonated sender + payment +20, used-trade escrow + payment +25). All v4 rules only ADD: no model answer or context can remove a point another rule gave.",
+    "2026-11-04 (user report: a Cloudflare-flagged DHL phish showed 'couldn't verify'): provider_phishing_warning — the site's host/CDN serves its own phishing interstitial to RedFlag (e.g. Cloudflare 'Suspected Phishing'): floor 95, like Safe Browsing. Observed by code (signals.provider_warning), never by a model; adds only."
+  ],
+  "score": {
+    "min": 0,
+    "max": 100
+  },
+  "levels": [
+    {
+      "level": "safe",
+      "min": 0
+    },
+    {
+      "level": "caution",
+      "min": 30
+    },
+    {
+      "level": "danger",
+      "min": 60
+    },
+    {
+      "level": "critical",
+      "min": 85
+    }
+  ],
+  "escalation": {
+    "min": 30,
+    "max": 70
+  },
+  "known_payment_processors": [
+    "stripe.com",
+    "paypal.com",
+    "adyen.com",
+    "braintreegateway.com",
+    "squareup.com",
+    "checkout.com",
+    "tosspayments.com",
+    "inicis.com",
+    "nicepay.co.kr",
+    "kakaopay.com"
+  ],
+  "sensitive_fields": {
+    "doc": "A form field is sensitive in category C if field.type is in C.types, or a C.phrase occurs as a whole-token sequence in normalize(type + ' ' + label + ' ' + name + ' ' + autocomplete). normalize = NFKC, lowercase, every char that is not a letter or digit -> space, collapse spaces, trim. If a form already carries sensitive_fields[], use it as-is.",
+    "categories": {
+      "password": {
+        "types": [
+          "password"
+        ],
+        "phrases": [
+          "password",
+          "passwd",
+          "passcode",
+          "비밀번호",
+          "암호"
+        ]
+      },
+      "card": {
+        "types": [],
+        "phrases": [
+          "card number",
+          "card no",
+          "cardnumber",
+          "credit card",
+          "debit card",
+          "cc number",
+          "cc csc",
+          "cc exp",
+          "cvv",
+          "cvv2",
+          "cvc",
+          "security code",
+          "expiry",
+          "expiration date",
+          "카드번호",
+          "카드 번호",
+          "유효기간",
+          "cvc번호"
+        ]
+      },
+      "secret": {
+        "types": [],
+        "phrases": [
+          "otp",
+          "one time password",
+          "one time code",
+          "verification code",
+          "sms code",
+          "auth code",
+          "authentication code",
+          "인증번호",
+          "인증 번호",
+          "seed phrase",
+          "recovery phrase",
+          "secret phrase",
+          "mnemonic",
+          "private key",
+          "pin",
+          "보안카드",
+          "otp번호"
+        ]
+      }
+    }
+  },
+  "facts": {
+    "safe_browsing_hit": "signals.safe_browsing == 'hit'",
+    "provider_warning": "signals.provider_warning (non-empty string, e.g. 'cloudflare_phishing') or null",
+    "domain_age_days": "signals.domain_age_days (integer or null)",
+    "registrable_domain": "input.registrable_domain",
+    "claimed_brand": "features.claimed_brand; empty/whitespace string -> null",
+    "brand_known": "claimed_brand matches a brand in brand_domains.json: normalize(alias) == normalize(claimed_brand), OR (brand.match == 'token' AND ' '+normalize(claimed_brand)+' ' contains ' '+normalize(alias)+' '). Same normalize as sensitive_fields. Brands are tried in file order; all matching brands count for brand_official.",
+    "brand_official": "brand_known AND registrable_domain equals one of the matched brand(s)' domains (lowercase)",
+    "official_domains": "domains of the first matched brand (list), [] if none",
+    "model_brand_matches_domain": "features.brand_matches_domain",
+    "sensitive_form_cross_site": "some form has same_site == false AND action_domain not null AND action_domain is not (and not a subdomain of) a known_payment_processors entry AND the form has at least one sensitive field",
+    "form_action_domain": "action_domain of the first form that satisfies sensitive_form_cross_site, else null",
+    "punycode_or_homoglyph": "signals.homoglyph == true. Plain punycode (e.g. a legitimate single-script Korean IDN) does NOT fire: Appendix B condition is IDN confusable characters. Rule id kept from Appendix B.",
+    "requested_actions": "features.requested_actions (list) or []",
+    "urgency_or_threat": "features.urgency_or_threat == true",
+    "too_good_to_be_true": "features.too_good_to_be_true == true",
+    "addresses_ai_analyzer": "features.addresses_ai_analyzer == true",
+    "cloaking_suspected": "input.cloaking_suspected == true",
+    "evidence0": "features.evidence[0] or null",
+    "sensitive_request": "requested_actions contains enter_password, enter_card or enter_secret_code, OR some form (any action domain) has at least one sensitive field",
+    "features_repaired": "input.features_repaired == true (the model output was schema-invalid and fixed by FeatureRepair)",
+    "analysis_incomplete": "input.analysis_incomplete == true (report status is timeout/error: the model step did not finish)",
+    "core_fields_repaired": "input.core_fields_repaired == true (FeatureRepair had to fill claimed_brand, brand_matches_domain or requested_actions)",
+    "hidden_ai_instruction": "some hidden_text_patterns.patterns regex matches normalize_for_patterns(signals.hidden_text) (NFKC, lowercase, whitespace runs -> one space, trim)",
+    "data_endpoints": "signals.data_endpoints (list of URL strings) or []",
+    "exfil_messenger_bot": "some data_endpoints entry matches data_destinations.messenger_bot",
+    "exfil_form_service": "some data_endpoints entry matches data_destinations.form_service",
+    "exfil_host": "host of the first data_endpoints entry matching messenger_bot, else of the first matching form_service, else null",
+    "personal_request": "sensitive_request OR requested_actions contains enter_personal_id or enter_contact_info",
+    "form_destination": "input.form_destination (Gemma: same_org | known_service | unrelated | unclear) or null",
+    "form_destination_domain": "input.form_destination_domain or null",
+    "payment_request": "requested_actions contains pay_fee or enter_card, OR features.page_type == 'payment'",
+    "context_scenario": "input.context.scenario or null",
+    "context_consistency": "input.context.consistency or null",
+    "context_sender_risk": "input.context.sender_risk or null",
+    "context_guided": "input.context.guided == true (a call or message told the user to open the page)",
+    "context_evidence0": "input.context.evidence[0] or null"
+  },
+  "rules": [
+    {
+      "id": "safe_browsing_hit",
+      "kind": "floor",
+      "value": 95,
+      "severity": "critical",
+      "source": "signal",
+      "when": {
+        "fact": "safe_browsing_hit"
+      },
+      "title": {
+        "en": "Listed as dangerous by Google Safe Browsing",
+        "ko": "Google 세이프 브라우징 위험 목록에 있어요"
+      },
+      "evidence": "safe_browsing: hit"
+    },
+    {
+      "id": "provider_phishing_warning",
+      "kind": "floor",
+      "value": 95,
+      "severity": "critical",
+      "source": "signal",
+      "when": {
+        "not_null": "provider_warning"
+      },
+      "title": {
+        "en": "The site's own host flagged it as phishing (Cloudflare warning page)",
+        "ko": "사이트의 호스팅 업체(Cloudflare)가 피싱으로 차단해 둔 사이트예요"
+      },
+      "evidence": "{provider_warning}"
+    },
+    {
+      "id": "brand_mismatch_known_brand",
+      "kind": "add",
+      "weight": 40,
+      "severity": "high",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "fact": "brand_known"
+          },
+          {
+            "not": {
+              "fact": "brand_official"
+            }
+          }
+        ]
+      },
+      "title": {
+        "en": "Pretends to be {claimed_brand} on a different domain",
+        "ko": "{claimed_brand} 공식 주소가 아닌데 {claimed_brand}인 척해요"
+      },
+      "evidence": "{evidence0}"
+    },
+    {
+      "id": "brand_mismatch_sensitive_request",
+      "kind": "add",
+      "weight": 20,
+      "severity": "high",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "fact": "brand_known"
+          },
+          {
+            "not": {
+              "fact": "brand_official"
+            }
+          },
+          {
+            "fact": "sensitive_request"
+          }
+        ]
+      },
+      "title": {
+        "en": "Asks for your password, card or codes while posing as {claimed_brand}",
+        "ko": "{claimed_brand}인 척하면서 비밀번호·카드·인증번호를 요구해요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "brand_mismatch_model_only",
+      "kind": "add",
+      "weight": 25,
+      "severity": "medium",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "not_null": "claimed_brand"
+          },
+          {
+            "not": {
+              "fact": "brand_known"
+            }
+          },
+          {
+            "eq": [
+              "model_brand_matches_domain",
+              "no"
+            ]
+          }
+        ]
+      },
+      "title": {
+        "en": "Claims to be {claimed_brand}, but the address doesn't fit",
+        "ko": "주소가 {claimed_brand}의 것이 아닌 것 같아요"
+      },
+      "evidence": "{evidence0}"
+    },
+    {
+      "id": "new_domain",
+      "kind": "add",
+      "weight": 25,
+      "severity": "medium",
+      "source": "signal",
+      "when": {
+        "lt": [
+          "domain_age_days",
+          30
+        ]
+      },
+      "title": {
+        "en": "This site was created only {domain_age_days} days ago",
+        "ko": "만들어진 지 {domain_age_days}일밖에 안 된 사이트예요"
+      },
+      "evidence": "domain_age_days: {domain_age_days}"
+    },
+    {
+      "id": "sensitive_form_cross_site",
+      "kind": "add",
+      "weight": 20,
+      "severity": "medium",
+      "source": "signal",
+      "when": {
+        "fact": "sensitive_form_cross_site"
+      },
+      "title": {
+        "en": "Sends what you type to another site ({form_action_domain})",
+        "ko": "입력한 정보를 다른 사이트({form_action_domain})로 보내요"
+      },
+      "evidence": "form action: {form_action_domain}"
+    },
+    {
+      "id": "punycode_or_homoglyph",
+      "kind": "add",
+      "weight": 20,
+      "severity": "medium",
+      "source": "signal",
+      "when": {
+        "fact": "punycode_or_homoglyph"
+      },
+      "title": {
+        "en": "The address uses look-alike characters",
+        "ko": "주소에 비슷하게 생긴 글자를 섞어 썼어요"
+      },
+      "evidence": "{registrable_domain}"
+    },
+    {
+      "id": "addresses_ai_analyzer",
+      "kind": "add",
+      "weight": 30,
+      "severity": "high",
+      "source": "model",
+      "when": {
+        "fact": "addresses_ai_analyzer"
+      },
+      "title": {
+        "en": "Contains text aimed at fooling AI safety checks",
+        "ko": "AI 검사를 속이려는 문구가 숨어 있어요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "hidden_ai_instruction_detected",
+      "kind": "add",
+      "weight": 30,
+      "severity": "high",
+      "source": "signal",
+      "when": {
+        "all": [
+          {
+            "fact": "hidden_ai_instruction"
+          },
+          {
+            "not": {
+              "fact": "addresses_ai_analyzer"
+            }
+          }
+        ]
+      },
+      "title": {
+        "en": "Hidden text gives orders to AI safety checks",
+        "ko": "숨은 문구가 AI 검사에 지시를 내려요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "secret_code_requested",
+      "kind": "add",
+      "weight": 25,
+      "severity": "medium",
+      "source": "model",
+      "when": {
+        "has": [
+          "requested_actions",
+          "enter_secret_code"
+        ]
+      },
+      "title": {
+        "en": "Asks for a one-time code or recovery phrase",
+        "ko": "인증번호나 복구 문구를 달라고 해요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "too_good_to_be_true",
+      "kind": "add",
+      "weight": 15,
+      "severity": "low",
+      "source": "model",
+      "when": {
+        "fact": "too_good_to_be_true"
+      },
+      "title": {
+        "en": "The offer is too good to be true",
+        "ko": "믿기 어려울 만큼 좋은 조건을 내세워요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "urgency_or_threat",
+      "kind": "add",
+      "weight": 10,
+      "severity": "low",
+      "source": "model",
+      "when": {
+        "fact": "urgency_or_threat"
+      },
+      "title": {
+        "en": "Pressures you to act right now",
+        "ko": "지금 당장 하라고 재촉해요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "call_phone_with_urgency",
+      "kind": "add",
+      "weight": 15,
+      "severity": "medium",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "has": [
+              "requested_actions",
+              "call_phone"
+            ]
+          },
+          {
+            "fact": "urgency_or_threat"
+          }
+        ]
+      },
+      "title": {
+        "en": "Urges you to call a phone number",
+        "ko": "급하게 전화하라고 해요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "cloaking_suspected",
+      "kind": "add",
+      "weight": 35,
+      "severity": "high",
+      "source": "signal",
+      "when": {
+        "fact": "cloaking_suspected"
+      },
+      "title": {
+        "en": "Shows a different page to security scanners",
+        "ko": "보안 검사기에는 다른 화면을 보여줘요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "data_sent_to_messenger_bot",
+      "kind": "add",
+      "weight": 35,
+      "severity": "high",
+      "source": "signal",
+      "when": {
+        "fact": "exfil_messenger_bot"
+      },
+      "title": {
+        "en": "What you type here is sent to a chat bot ({exfil_host})",
+        "ko": "입력한 내용이 메신저 봇({exfil_host})으로 전송돼요"
+      },
+      "evidence": "endpoint: {exfil_host}"
+    },
+    {
+      "id": "sensitive_data_to_form_service",
+      "kind": "add",
+      "weight": 30,
+      "severity": "medium",
+      "source": "signal",
+      "when": {
+        "all": [
+          {
+            "fact": "exfil_form_service"
+          },
+          {
+            "not": {
+              "fact": "exfil_messenger_bot"
+            }
+          },
+          {
+            "any": [
+              {
+                "fact": "sensitive_request"
+              },
+              {
+                "has": [
+                  "requested_actions",
+                  "enter_personal_id"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "title": {
+        "en": "Sensitive details are sent to a third-party collection service",
+        "ko": "민감한 정보가 외부 수집 서비스로 전송돼요"
+      },
+      "evidence": "endpoint: {exfil_host}"
+    },
+    {
+      "id": "destination_unrelated",
+      "kind": "add",
+      "weight": 20,
+      "severity": "medium",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "eq": [
+              "form_destination",
+              "unrelated"
+            ]
+          },
+          {
+            "fact": "personal_request"
+          }
+        ]
+      },
+      "title": {
+        "en": "Your details go to a site unrelated to this one",
+        "ko": "입력한 정보가 이 사이트와 관계없는 곳으로 가요"
+      },
+      "evidence": "destination: {form_destination_domain}"
+    },
+    {
+      "id": "context_scam_scenario",
+      "kind": "add",
+      "weight": 25,
+      "severity": "high",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "not_null": "context_scenario"
+          },
+          {
+            "not": {
+              "eq": [
+                "context_scenario",
+                "none"
+              ]
+            }
+          }
+        ]
+      },
+      "title": {
+        "en": "How you got this link matches a known scam pattern",
+        "ko": "링크를 받은 상황이 알려진 사기 수법과 같아요"
+      },
+      "evidence": "{context_evidence0}"
+    },
+    {
+      "id": "context_purpose_mismatch",
+      "kind": "add",
+      "weight": 20,
+      "severity": "medium",
+      "source": "model",
+      "when": {
+        "eq": [
+          "context_consistency",
+          "mismatch"
+        ]
+      },
+      "title": {
+        "en": "The page asks for something other than what you came to do",
+        "ko": "하려던 일과 다른 것을 요구하는 페이지예요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "guided_app_install",
+      "kind": "floor",
+      "value": 85,
+      "severity": "critical",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "fact": "context_guided"
+          },
+          {
+            "has": [
+              "requested_actions",
+              "install_app"
+            ]
+          }
+        ]
+      },
+      "title": {
+        "en": "A call or message told you to install an app from this page",
+        "ko": "전화·메시지 안내를 받고 이 페이지에서 앱 설치를 요구받았어요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "unknown_sender_payment",
+      "kind": "add",
+      "weight": 20,
+      "severity": "medium",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "any": [
+              {
+                "eq": [
+                  "context_sender_risk",
+                  "unknown_sender"
+                ]
+              },
+              {
+                "eq": [
+                  "context_sender_risk",
+                  "impersonated_org"
+                ]
+              }
+            ]
+          },
+          {
+            "fact": "payment_request"
+          }
+        ]
+      },
+      "title": {
+        "en": "A payment link from an unknown or impersonated sender",
+        "ko": "모르는 사람이나 사칭한 곳에서 보낸 결제 링크예요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "used_trade_escrow_payment",
+      "kind": "add",
+      "weight": 25,
+      "severity": "high",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "eq": [
+              "context_scenario",
+              "used_trade_escrow"
+            ]
+          },
+          {
+            "fact": "payment_request"
+          }
+        ]
+      },
+      "title": {
+        "en": "A used-goods trade 'safe payment' link: a common scam",
+        "ko": "중고거래 '안전결제' 링크는 사기에 자주 쓰여요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "analysis_incomplete",
+      "kind": "clamp",
+      "min": 30,
+      "max": 100,
+      "severity": "medium",
+      "source": "signal",
+      "when": {
+        "fact": "analysis_incomplete"
+      },
+      "title": {
+        "en": "The on-device check could not finish",
+        "ko": "기기 안 분석을 끝내지 못했어요"
+      },
+      "evidence": null
+    },
+    {
+      "id": "model_output_repaired",
+      "kind": "clamp",
+      "min": 30,
+      "max": 100,
+      "severity": "low",
+      "source": "model",
+      "when": {
+        "all": [
+          {
+            "fact": "features_repaired"
+          },
+          {
+            "any": [
+              {
+                "fact": "core_fields_repaired"
+              },
+              {
+                "fact": "safe_browsing_hit"
+              },
+              {
+                "lt": [
+                  "domain_age_days",
+                  30
+                ]
+              },
+              {
+                "fact": "sensitive_form_cross_site"
+              },
+              {
+                "fact": "punycode_or_homoglyph"
+              }
+            ]
+          }
+        ]
+      },
+      "title": {
+        "en": "Part of the on-device model's answer was missing, so this can't be called safe",
+        "ko": "기기 안 모델의 답 일부가 빠져 있어서 안전하다고 할 수 없어요"
+      },
+      "evidence": null
+    }
+  ],
+  "headline_priority": [
+    "safe_browsing_hit",
+    "provider_phishing_warning",
+    "guided_app_install",
+    "cloaking_suspected",
+    "data_sent_to_messenger_bot",
+    "brand_mismatch_known_brand",
+    "used_trade_escrow_payment",
+    "addresses_ai_analyzer",
+    "hidden_ai_instruction_detected",
+    "sensitive_form_cross_site",
+    "sensitive_data_to_form_service",
+    "destination_unrelated",
+    "context_scam_scenario",
+    "unknown_sender_payment",
+    "secret_code_requested",
+    "brand_mismatch_model_only",
+    "call_phone_with_urgency",
+    "too_good_to_be_true"
+  ],
+  "headline_min_level": "caution",
+  "headline_by_rule": {
+    "safe_browsing_hit": {
+      "en": "Google Safe Browsing flagged this page",
+      "ko": "Google 세이프 브라우징이 위험하다고 표시한 페이지예요"
+    },
+    "cloaking_suspected": {
+      "en": "This page hides its real face from scanners",
+      "ko": "검사기 앞에서 정체를 숨기는 페이지예요"
+    },
+    "brand_mismatch_known_brand": {
+      "en": "This page is impersonating {claimed_brand}",
+      "ko": "{claimed_brand} 사칭이 의심되는 페이지예요"
+    },
+    "addresses_ai_analyzer": {
+      "en": "This page is trying to trick safety checks",
+      "ko": "안전 검사를 속이려는 페이지예요"
+    },
+    "sensitive_form_cross_site": {
+      "en": "Your details would be sent somewhere else",
+      "ko": "입력한 정보가 엉뚱한 곳으로 가요"
+    },
+    "secret_code_requested": {
+      "en": "This page wants your secret codes",
+      "ko": "인증번호를 노리는 페이지예요"
+    },
+    "brand_mismatch_model_only": {
+      "en": "This page may not be who it says it is",
+      "ko": "자기가 말하는 곳이 아닐 수 있어요"
+    },
+    "call_phone_with_urgency": {
+      "en": "Don't call the number on this page",
+      "ko": "이 페이지의 번호로 전화하지 마세요"
+    },
+    "too_good_to_be_true": {
+      "en": "This deal is too good to be true",
+      "ko": "너무 좋은 조건은 의심하세요"
+    },
+    "hidden_ai_instruction_detected": {
+      "en": "This page is trying to trick safety checks",
+      "ko": "안전 검사를 속이려는 페이지예요"
+    },
+    "data_sent_to_messenger_bot": {
+      "en": "Whatever you type here goes to a chat bot",
+      "ko": "입력한 내용이 메신저 봇으로 넘어가요"
+    },
+    "sensitive_data_to_form_service": {
+      "en": "Your details are sent to a third-party collection service",
+      "ko": "입력한 정보가 외부 수집 서비스로 가요"
+    },
+    "destination_unrelated": {
+      "en": "Your details go to a site unrelated to this one",
+      "ko": "입력한 정보가 관계없는 곳으로 가요"
+    },
+    "guided_app_install": {
+      "en": "Installing an app because a caller told you to is a remote-control scam pattern",
+      "ko": "전화·문자 안내로 앱을 설치하게 하는 건 원격조종 사기 수법이에요"
+    },
+    "used_trade_escrow_payment": {
+      "en": "This looks like a fake used-trade 'safe payment' link",
+      "ko": "중고거래 '안전결제' 사칭 링크로 보여요"
+    },
+    "unknown_sender_payment": {
+      "en": "A payment link from an unknown or impersonated sender",
+      "ko": "모르는 사람이나 사칭한 곳에서 보낸 결제 링크예요"
+    },
+    "context_scam_scenario": {
+      "en": "How you got this link matches a known scam",
+      "ko": "링크를 받은 상황이 알려진 사기 수법과 같아요"
+    },
+    "provider_phishing_warning": {
+      "en": "Its host has flagged this page as phishing",
+      "ko": "호스팅 업체가 피싱으로 표시한 페이지예요"
+    }
+  },
+  "headline_by_level": {
+    "safe": {
+      "en": "No red flags found",
+      "ko": "위험 신호를 찾지 못했어요"
+    },
+    "caution": {
+      "en": "Take a careful look before you continue",
+      "ko": "계속하기 전에 한 번 더 확인하세요"
+    },
+    "danger": {
+      "en": "This page looks dangerous",
+      "ko": "위험해 보이는 페이지예요"
+    },
+    "critical": {
+      "en": "Do not enter anything on this page",
+      "ko": "이 페이지에 아무것도 입력하지 마세요"
+    }
+  },
+  "hidden_text_patterns": {
+    "doc": "Deterministic backup for addresses_ai_analyzer (the model sometimes drops that key). Narrow on purpose: an addressee (AI / scanner / reviewer) plus an instruction or a verdict, an instruction override, or an injected verdict. Applied ONLY to hidden_text. Regexes must work identically in Java and Python (no lookbehind, no possessive quantifiers).",
+    "patterns": [
+      "\\b(?:ignore|disregard|forget) (?:all |any )?(?:of )?(?:the |your )?(?:previous|prior|above|earlier|preceding) (?:instructions|prompts|rules|directions)",
+      "\\b(?:classify|categori[sz]e|mark|label|rate|report|treat) (?:it|this|the)(?: (?:page|site|website|url|domain|link))? as (?:safe|legitimate|benign|trusted|clean|harmless|not (?:malicious|phishing|suspicious|a scam))",
+      "(?:\\bai\\b|\\ba\\.i\\.|\\bllm\\b|language model|\\bassistant\\b|chatbot|security scanner|\\bscanner\\b|automated (?:security )?(?:review|reviewer|scan|analysis)|safety (?:check|checker|filter)|\\bclassifier\\b|content moderator|\\bcrawler\\b)[^.!?]{0,100}(?:classify|categori[sz]e|verdict|do not flag|don't flag|must not flag|not be flagged|as safe|as legitimate|has (?:already )?(?:passed|been verified|been approved))",
+      "[\\\"']?verdict[\\\"']?\\s*[:=]\\s*[\\\"']?(?:safe|benign|legitimate)",
+      "(?:이전|위의|앞의|기존)\\s*(?:지시|명령|지침|프롬프트)\\S*\\s*무시",
+      "안전(?:하다고|한 (?:사이트|페이지)로|으로)\\s*(?:판단|분류|표시|평가|판정)"
+    ]
+  },
+  "data_destinations": {
+    "doc": "Endpoint URLs (signals.data_endpoints: form actions, fetch/XHR/beacon requests seen while loading, URL literals in inline scripts that submit data) are parsed as ^https?://AUTHORITY PATH (userinfo and :port dropped, host lowercased, trailing '.' trimmed, empty path = '/'). An entry matches when host == entry.host or host ends with '.' + entry.host, and the path starts with entry.path_prefix (if given). messenger_bot: client-side posts to a chat bot/webhook (the bot token is exposed to every visitor; phishing kits use it to receive victims' input). form_service: third-party form/data catchers. known_data_services: newsletter/CRM/analytics hosts a page commonly sends data to; never scored, only excluded from the Gemma destination question.",
+    "messenger_bot": [
+      {
+        "host": "api.telegram.org",
+        "path_prefix": "/bot"
+      },
+      {
+        "host": "discord.com",
+        "path_prefix": "/api/webhooks/"
+      },
+      {
+        "host": "discordapp.com",
+        "path_prefix": "/api/webhooks/"
+      },
+      {
+        "host": "hooks.slack.com",
+        "path_prefix": "/services/"
+      }
+    ],
+    "form_service": [
+      {
+        "host": "formspree.io"
+      },
+      {
+        "host": "formsubmit.co"
+      },
+      {
+        "host": "getform.io"
+      },
+      {
+        "host": "web3forms.com"
+      },
+      {
+        "host": "formcarry.com"
+      },
+      {
+        "host": "usebasin.com"
+      },
+      {
+        "host": "submit-form.com"
+      },
+      {
+        "host": "staticforms.xyz"
+      },
+      {
+        "host": "formbold.com"
+      },
+      {
+        "host": "script.google.com",
+        "path_prefix": "/macros/"
+      },
+      {
+        "host": "webhook.site"
+      },
+      {
+        "host": "pipedream.net"
+      },
+      {
+        "host": "requestcatcher.com"
+      }
+    ],
+    "known_data_services": [
+      "list-manage.com",
+      "mailchimp.com",
+      "sibforms.com",
+      "sendinblue.com",
+      "brevo.com",
+      "hsforms.com",
+      "hsforms.net",
+      "hubspot.com",
+      "klaviyo.com",
+      "typeform.com",
+      "jotform.com",
+      "mailerlite.com",
+      "convertkit.com",
+      "constantcontact.com",
+      "google-analytics.com",
+      "googletagmanager.com",
+      "doubleclick.net",
+      "facebook.com",
+      "facebook.net",
+      "googleapis.com",
+      "gstatic.com",
+      "google.com",
+      "recaptcha.net",
+      "hcaptcha.com",
+      "cloudflare.com",
+      "cloudflareinsights.com",
+      "sentry.io",
+      "clarity.ms",
+      "hotjar.com",
+      "kakao.com",
+      "naver.com",
+      "daum.net",
+      "channel.io"
+    ]
+  }
+}

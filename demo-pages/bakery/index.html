@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hanaroom Bakery | Tiong Bahru</title>
+<style>
+  body{margin:0;font-family:"Avenir Next",Roboto,Helvetica,Arial,sans-serif;background:#fffaf3;color:#3b2f2a}
+  header{padding:28px 20px 10px;text-align:center}
+  header h1{margin:0;font-size:30px;letter-spacing:1px}
+  header p{margin:6px 0 0;color:#8a6f5e}
+  .menu{max-width:440px;margin:16px auto;padding:0 20px}
+  .row{display:flex;justify-content:space-between;border-bottom:1px dashed #e2d3c3;padding:10px 0}
+  form{max-width:440px;margin:20px auto;padding:20px;background:#fff;border-radius:12px}
+  label{display:block;font-size:13px;margin:10px 0 4px}
+  input,textarea{width:100%;box-sizing:border-box;padding:10px;border:1px solid #e0d6cc;border-radius:8px;font-size:15px}
+  button{margin-top:14px;width:100%;padding:13px;border:0;border-radius:8px;background:#7a4b2a;color:#fff;font-size:15px}
+  footer{text-align:center;font-size:13px;color:#8a6f5e;padding:20px}
+</style>
+</head>
+<body>
+<header><h1>Hanaroom Bakery</h1><p>Korean-style bakery · Tiong Bahru</p></header>
+<section class="menu">
+  <p>Hanaroom Bakery opened on Tiong Bahru Road in September. We bake small batches every morning: milk bread, red bean buns and sweet potato castella.</p>
+  <div class="row"><span>Milk bread loaf</span><span>S$6.50</span></div>
+  <div class="row"><span>Red bean bun</span><span>S$2.80</span></div>
+  <div class="row"><span>Sweet potato castella</span><span>S$4.20</span></div>
+  <p>Open Tue–Sun, 8am–6pm. Closed on Mondays.</p>
+</section>
+<form action="https://hanaroombakery.sg/order" method="post" onsubmit="return false">
+  <strong>Order for pickup</strong>
+  <label for="n">Name</label><input id="n" name="name">
+  <label for="p">Phone</label><input id="p" name="phone" type="tel">
+  <label for="o">Your order</label><textarea id="o" name="order" rows="3"></textarea>
+  <button type="submit">Send order</button>
+</form>
+<footer>71 Tiong Bahru Road · hello@hanaroombakery.sg</footer>
+</body>
+</html>

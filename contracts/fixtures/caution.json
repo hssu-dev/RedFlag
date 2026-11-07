@@ -1,0 +1,114 @@
+{
+  "schema_version": "1",
+  "id": "c5379a4b-a704-5f51-9c03-02e4c7edf7ae",
+  "mode": "lite",
+  "status": "complete",
+  "url": "https://soomstudio.kr/trial",
+  "final_url": "https://soomstudio.kr/trial",
+  "registrable_domain": "soomstudio.kr",
+  "score": 35,
+  "level": "caution",
+  "escalate": true,
+  "headline": {
+    "en": "Take a careful look before you continue",
+    "ko": "계속하기 전에 한 번 더 확인하세요"
+  },
+  "red_flags": [
+    {
+      "rule_id": "new_domain",
+      "severity": "medium",
+      "source": "signal+rule",
+      "weight": 25,
+      "title": {
+        "en": "This site was created only 18 days ago",
+        "ko": "만들어진 지 18일밖에 안 된 사이트예요"
+      },
+      "evidence": "domain_age_days: 18"
+    },
+    {
+      "rule_id": "urgency_or_threat",
+      "severity": "low",
+      "source": "gemma+rule",
+      "weight": 10,
+      "title": {
+        "en": "Pressures you to act right now",
+        "ko": "지금 당장 하라고 재촉해요"
+      },
+      "evidence": null
+    }
+  ],
+  "brand": {
+    "claimed": "숨 필라테스",
+    "official_domains": [],
+    "matches": null
+  },
+  "signals": {
+    "domain_age_days": 18,
+    "tls_issuer": "Let's Encrypt",
+    "cert_age_days": 15,
+    "safe_browsing": "no_match",
+    "redirect_count": 0,
+    "punycode": false,
+    "homoglyph": false,
+    "forms": [
+      {
+        "action_domain": "soomstudio.kr",
+        "same_site": true,
+        "sensitive_fields": []
+      }
+    ],
+    "external_link_domains": [
+      "instagram.com",
+      "booking.naver.com"
+    ]
+  },
+  "features": {
+    "evidence": [
+      "체험 수업은 선착순 20명만 받습니다."
+    ],
+    "claimed_brand": "숨 필라테스",
+    "brand_matches_domain": "yes",
+    "page_type": "info",
+    "requested_actions": [
+      "enter_contact_info"
+    ],
+    "urgency_or_threat": true,
+    "too_good_to_be_true": false,
+    "addresses_ai_analyzer": false,
+    "verdict": "safe",
+    "confidence": "high"
+  },
+  "cloaking": {
+    "suspected": false,
+    "detail": null
+  },
+  "trace": [
+    {
+      "t_ms": 0,
+      "step": "gate",
+      "detail": "unknown domain"
+    },
+    {
+      "t_ms": 1350,
+      "step": "extract",
+      "detail": "1 form, 0 hidden text"
+    },
+    {
+      "t_ms": 1420,
+      "step": "signals",
+      "detail": "domain age 18 days"
+    },
+    {
+      "t_ms": 3000,
+      "step": "gemma",
+      "detail": "claimed_brand=숨 필라테스"
+    }
+  ],
+  "engine": {
+    "model": "gemma-4-e4b",
+    "runtime": "litert-lm",
+    "think": false
+  },
+  "latency_ms": 3020,
+  "created_at": "2026-11-05T01:12:40Z"
+}

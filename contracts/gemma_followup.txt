@@ -1,0 +1,2 @@
+Your previous answer is missing these keys: {keys}.
+Reply with exactly one JSON object that contains ONLY these keys, with the same meanings and allowed values as in your instructions. No markdown, no text before or after the JSON.

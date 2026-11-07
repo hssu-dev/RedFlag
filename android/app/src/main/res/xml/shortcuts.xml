@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App shortcut: open home with the "Check a link" field focused (the clipboard is not read). -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="check_link"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_check_short"
+        android:shortcutLongLabel="@string/shortcut_check_long">
+        <intent
+            android:action="dev.redflag.action.CHECK_LINK"
+            android:targetPackage="dev.redflag.app"
+            android:targetClass="dev.redflag.app.MainActivity" />
+    </shortcut>
+</shortcuts>

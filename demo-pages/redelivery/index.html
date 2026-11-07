@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>택배 재배송 신청</title>
+<!-- RedFlag DEMO page (context analyzer scenario 3): local-only unbranded redelivery-fee page, opened from an SMS. -->
+<style>body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR",Roboto,sans-serif;background:#f6f7f9;color:#222}header{background:#fff;padding:16px 20px;border-bottom:3px solid #2b6cb0;font-weight:800;font-size:20px;color:#2b6cb0}main{max-width:440px;margin:0 auto;padding:18px}.box{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;line-height:1.5;font-size:15px}label{display:block;font-size:13px;margin:10px 0 4px;color:#555}input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccd;border-radius:6px;font-size:15px}button,.btn{display:block;text-align:center;text-decoration:none;margin-top:16px;width:100%;box-sizing:border-box;padding:14px;border:0;border-radius:6px;background:#2b6cb0;color:#fff;font-size:16px;font-weight:700}small{color:#777}</style>
+</head>
+<body>
+<header>택배 재배송 센터</header>
+<main>
+  <div class="box">주소 정보가 정확하지 않아 배송이 완료되지 않았습니다. 주소를 확인하고 재배송 수수료를 결제하면 다시 배송됩니다.</div>
+  <form class="box" action="https://redelivery-center.com/apply" method="post" onsubmit="return false">
+    <label for="n">받는 분 이름</label><input id="n" name="name">
+    <label for="a">주소</label><input id="a" name="address">
+    <label for="p">휴대폰 번호</label><input id="p" name="phone" type="tel">
+    <label for="c">카드번호 (수수료 2,500원)</label><input id="c" name="cardnumber" autocomplete="cc-number">
+    <button type="submit">수수료 결제하고 재배송 신청</button>
+  </form>
+</main>
+</body>
+</html>

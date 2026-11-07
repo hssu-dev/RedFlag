@@ -1,0 +1,64 @@
+{
+ "generated_at": "2026-11-03T23:42:16+00:00",
+ "status": "PROPOSAL ONLY - contracts/scoring_rules.json was not modified",
+ "tuned_on": "split A",
+ "reported_on": "split B",
+ "objective": "det>=caution + det>=danger - 2*fp>=caution - 4*fp>=danger - 0.002*sum|dw| (rates on split A)",
+ "search": "coordinate descent over add-rule weights, steps \u00b15/10/15, bounds [0,60]; rules not firing on A unchanged",
+ "n_A": {
+  "malicious": 30,
+  "benign": 30
+ },
+ "changes": {
+  "brand_mismatch_known_brand": {
+   "from": 40,
+   "to": 60
+  },
+  "secret_code_requested": {
+   "from": 15,
+   "to": 25
+  }
+ },
+ "trace": [
+  "pass 1: brand_mismatch_known_brand 40 -> 50 (J 0.667 -> 0.780)",
+  "pass 1: brand_mismatch_known_brand 50 -> 60 (J 0.780 -> 1.060)",
+  "pass 1: secret_code_requested 15 -> 25 (J 1.060 -> 1.073)"
+ ],
+ "before": {
+  "A": {
+   "n_mal": 30,
+   "n_ben": 30,
+   "det_caution": 0.6,
+   "det_danger": 0.06666666666666667,
+   "fp_caution": 0.0,
+   "fp_danger": 0.0
+  },
+  "B": {
+   "n_mal": 30,
+   "n_ben": 30,
+   "det_caution": 0.5666666666666667,
+   "det_danger": 0.0,
+   "fp_caution": 0.0,
+   "fp_danger": 0.0
+  }
+ },
+ "after": {
+  "A": {
+   "n_mal": 30,
+   "n_ben": 30,
+   "det_caution": 0.6,
+   "det_danger": 0.5333333333333333,
+   "fp_caution": 0.0,
+   "fp_danger": 0.0
+  },
+  "B": {
+   "n_mal": 30,
+   "n_ben": 30,
+   "det_caution": 0.5666666666666667,
+   "det_danger": 0.4666666666666667,
+   "fp_caution": 0.0,
+   "fp_danger": 0.0
+  }
+ },
+ "caveat": "Small sample (~30+30 per split); treat as a direction, not a final weight set. Applying it needs contracts/scoring_rules.json + scoring_vectors.json updates and both engines re-tested."
+}

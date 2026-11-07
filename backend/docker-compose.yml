@@ -1,0 +1,60 @@
+# RedFlag Cloud: api + sandbox (Playwright, internal only) + demo-pages (local static demo site).
+#   cd backend && docker compose up -d --build        # DEMO_MODE off
+#   cd backend && DEMO_MODE=1 docker compose up -d --build
+# ANTHROPIC_API_KEY and GOOGLE_CLOUD_API_KEY come from ../.env (env_file).
+name: redflag
+
+services:
+  api:
+    build: { context: ., dockerfile: Dockerfile }
+    image: redflag-api:dev
+    ports: ["8000:8000"]
+    env_file:
+      - path: ../.env
+        required: false
+    environment:
+      SANDBOX_URL: http://sandbox:8090
+      DEMO_MODE: ${DEMO_MODE:-}
+      DEMO_BASE: docker
+      REDFLAG_MODEL: ${REDFLAG_MODEL:-claude-opus-5-5}
+      REDFLAG_EFFORT: ${REDFLAG_EFFORT:-medium}
+      # auto = real Google Safe Browsing v5 when GOOGLE_CLOUD_API_KEY / SAFE_BROWSING_API_KEY is in ../.env
+      SAFE_BROWSING_MODE: ${SAFE_BROWSING_MODE:-auto}
+      REDFLAG_DAILY_OPUS_CAP: ${REDFLAG_DAILY_OPUS_CAP:-100}
+      REDFLAG_WALL_CLOCK_S: ${REDFLAG_WALL_CLOCK_S:-45}
+      REDFLAG_CONTRACTS_DIR: /contracts
+      CACHE_PATH: /data/redflag.sqlite3
+    volumes:
+      - ../contracts:/contracts:ro
+      - ./data:/data
+    depends_on:
+      sandbox: { condition: service_healthy }
+    restart: unless-stopped
+
+  sandbox:
+    build: { context: ., dockerfile: sandbox/Dockerfile }
+    image: redflag-sandbox:dev
+    # No published ports: reachable only from the compose network (api -> http://sandbox:8090).
+    expose: ["8090"]
+    environment:
+      # The only private host the sandbox may load (SSRF guard blocks all other private IPs).
+      SANDBOX_ALLOW_HOSTS: demo-pages
+      SANDBOX_MAX_CONCURRENT: "2"
+    volumes:
+      - ../contracts:/contracts:ro
+    init: true
+    shm_size: 1gb
+    read_only: true
+    tmpfs: ["/tmp:size=512m,mode=1777", "/home/pwuser:size=256m,mode=1777"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    mem_limit: 2g
+    restart: unless-stopped
+
+  demo-pages:
+    # nginx stable branch, pinned (1.30.5, 2026-09-26; stable-alpine currently = 1.30.6 from 2026-10-29, too new).
+    image: nginx:1.30.5-alpine
+    ports: ["8081:80"]
+    volumes:
+      - ../demo-pages:/usr/share/nginx/html:ro
+    restart: unless-stopped

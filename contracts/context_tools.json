@@ -1,0 +1,93 @@
+{
+ "version": 1,
+ "doc": "Turn 2 tools (OpenAPI function objects). Kotlin: litertlm tool(OpenApiTool) with this object as the description; Python: Tool.get_tool_description() wraps it as {type: function, function: <this>}. Arguments are validated in code against these enums; anything else is ignored.",
+ "tools": [
+  {
+   "name": "request_auto_context",
+   "description": "Ask the user for consent to read the message that contained the link and a few messages around it in the source app.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "reasons": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "unexpected_payment",
+        "used_trade_payment",
+        "app_install",
+        "gov_or_refund",
+        "investment",
+        "account_threat",
+        "brand_unverifiable",
+        "delivery",
+        "other"
+       ]
+      },
+      "description": "why the context would help"
+     }
+    },
+    "required": [
+     "reasons"
+    ]
+   }
+  },
+  {
+   "name": "request_user_context",
+   "description": "Ask the user one fixed question (U1-U4) and let them answer with quick choices or text.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "question_id": {
+      "type": "string",
+      "enum": [
+       "U1",
+       "U2",
+       "U3",
+       "U4"
+      ],
+      "description": "U1 how did you get this link; U2 what were you about to do; U3 did a call or message tell you to open it; U4 were you in a used-goods trade"
+     },
+     "reasons": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "unexpected_payment",
+        "used_trade_payment",
+        "app_install",
+        "gov_or_refund",
+        "investment",
+        "account_threat",
+        "brand_unverifiable",
+        "delivery",
+        "other"
+       ]
+      },
+      "description": "why the answer would help"
+     }
+    },
+    "required": [
+     "question_id",
+     "reasons"
+    ]
+   }
+  },
+  {
+   "name": "no_context_needed",
+   "description": "How the user got this link would not change the risk.",
+   "parameters": {
+    "type": "object",
+    "properties": {
+     "reason": {
+      "type": "string",
+      "description": "short reason"
+     }
+    },
+    "required": [
+     "reason"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,553 @@
+{
+  "version": 1,
+  "doc": "Official registrable domains (eTLD+1) of brands that phishing commonly impersonates. ONLY domains we are certain about: a wrong entry blocks a legitimate site. Gate: a URL whose registrable_domain is listed here passes as known-good. Scoring: claimed_brand alias match -> brand_known; registrable_domain in domains -> brand_official. Aliases are matched after normalize() (see scoring_rules.json). Brands with match=='exact' (generic-word names) only match when normalize(alias) == normalize(claimed_brand); others use whole-token containment.",
+  "brands": [
+    {
+      "id": "dbs",
+      "name": "DBS",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "dbs",
+        "dbs bank",
+        "digibank",
+        "posb",
+        "dbs digibank"
+      ],
+      "domains": [
+        "dbs.com.sg",
+        "dbs.com",
+        "posb.com.sg"
+      ]
+    },
+    {
+      "id": "ocbc",
+      "name": "OCBC",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "ocbc",
+        "ocbc bank"
+      ],
+      "domains": [
+        "ocbc.com"
+      ]
+    },
+    {
+      "id": "uob",
+      "name": "UOB",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "uob",
+        "united overseas bank"
+      ],
+      "domains": [
+        "uob.com.sg",
+        "uobgroup.com"
+      ]
+    },
+    {
+      "id": "singpass",
+      "name": "Singpass",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "singpass"
+      ],
+      "domains": [
+        "singpass.gov.sg"
+      ]
+    },
+    {
+      "id": "iras",
+      "name": "IRAS",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "iras",
+        "inland revenue authority of singapore"
+      ],
+      "domains": [
+        "iras.gov.sg"
+      ]
+    },
+    {
+      "id": "cpf",
+      "name": "CPF Board",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "cpf",
+        "cpf board",
+        "central provident fund"
+      ],
+      "domains": [
+        "cpf.gov.sg"
+      ]
+    },
+    {
+      "id": "singtel",
+      "name": "Singtel",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "singtel"
+      ],
+      "domains": [
+        "singtel.com"
+      ]
+    },
+    {
+      "id": "singpost",
+      "name": "SingPost",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "singpost",
+        "singapore post"
+      ],
+      "domains": [
+        "singpost.com"
+      ]
+    },
+    {
+      "id": "sgx",
+      "name": "SGX",
+      "region": "sg",
+      "match": "token",
+      "aliases": [
+        "sgx",
+        "singapore exchange",
+        "sgx group"
+      ],
+      "domains": [
+        "sgx.com"
+      ]
+    },
+    {
+      "id": "grab",
+      "name": "Grab",
+      "region": "sg",
+      "match": "exact",
+      "aliases": [
+        "grab",
+        "grab singapore",
+        "grabpay",
+        "grab pay"
+      ],
+      "domains": [
+        "grab.com"
+      ]
+    },
+    {
+      "id": "shinhan",
+      "name": "신한은행",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "신한은행",
+        "신한",
+        "shinhan",
+        "shinhan bank"
+      ],
+      "domains": [
+        "shinhan.com"
+      ]
+    },
+    {
+      "id": "kbstar",
+      "name": "KB국민은행",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "kb국민은행",
+        "국민은행",
+        "kb kookmin bank",
+        "kb국민"
+      ],
+      "domains": [
+        "kbstar.com"
+      ]
+    },
+    {
+      "id": "woori",
+      "name": "우리은행",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "우리은행",
+        "woori bank"
+      ],
+      "domains": [
+        "wooribank.com"
+      ]
+    },
+    {
+      "id": "kakaobank",
+      "name": "카카오뱅크",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "카카오뱅크",
+        "kakaobank",
+        "kakao bank"
+      ],
+      "domains": [
+        "kakaobank.com"
+      ]
+    },
+    {
+      "id": "toss",
+      "name": "토스",
+      "region": "kr",
+      "match": "exact",
+      "aliases": [
+        "토스",
+        "toss",
+        "토스뱅크",
+        "toss bank",
+        "토스페이"
+      ],
+      "domains": [
+        "toss.im",
+        "tossbank.com"
+      ]
+    },
+    {
+      "id": "naver",
+      "name": "네이버",
+      "region": "kr",
+      "match": "exact",
+      "aliases": [
+        "네이버",
+        "naver"
+      ],
+      "domains": [
+        "naver.com"
+      ]
+    },
+    {
+      "id": "kakao",
+      "name": "카카오",
+      "region": "kr",
+      "match": "exact",
+      "aliases": [
+        "카카오",
+        "kakao",
+        "카카오톡",
+        "kakaotalk"
+      ],
+      "domains": [
+        "kakao.com"
+      ]
+    },
+    {
+      "id": "cj_logistics",
+      "name": "CJ대한통운",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "cj대한통운",
+        "cj 대한통운",
+        "대한통운",
+        "cj logistics",
+        "cj korea express"
+      ],
+      "domains": [
+        "cjlogistics.com"
+      ]
+    },
+    {
+      "id": "epost",
+      "name": "우체국",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "우체국",
+        "우체국택배",
+        "korea post",
+        "인터넷우체국"
+      ],
+      "domains": [
+        "epost.go.kr"
+      ]
+    },
+    {
+      "id": "nhis",
+      "name": "국민건강보험공단",
+      "region": "kr",
+      "match": "token",
+      "aliases": [
+        "국민건강보험",
+        "국민건강보험공단",
+        "건강보험공단",
+        "nhis",
+        "national health insurance service"
+      ],
+      "domains": [
+        "nhis.or.kr"
+      ]
+    },
+    {
+      "id": "coupang",
+      "name": "쿠팡",
+      "region": "kr",
+      "match": "exact",
+      "aliases": [
+        "쿠팡",
+        "coupang"
+      ],
+      "domains": [
+        "coupang.com"
+      ]
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "microsoft",
+        "microsoft 365",
+        "office 365",
+        "microsoft outlook",
+        "outlook com",
+        "windows defender",
+        "windows security",
+        "microsoft windows",
+        "microsoft defender",
+        "onedrive",
+        "skype",
+        "microsoft account"
+      ],
+      "domains": [
+        "microsoft.com",
+        "microsoftonline.com",
+        "live.com",
+        "office.com",
+        "outlook.com",
+        "windows.com",
+        "microsoft365.com",
+        "office365.com",
+        "skype.com"
+      ]
+    },
+    {
+      "id": "google",
+      "name": "Google",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "google",
+        "gmail",
+        "google account"
+      ],
+      "domains": [
+        "google.com",
+        "google.com.sg",
+        "google.co.kr",
+        "gmail.com"
+      ]
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "region": "global",
+      "match": "exact",
+      "aliases": [
+        "apple",
+        "apple id",
+        "icloud",
+        "apple account",
+        "apple support",
+        "apple store"
+      ],
+      "domains": [
+        "apple.com",
+        "icloud.com"
+      ]
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "paypal"
+      ],
+      "domains": [
+        "paypal.com"
+      ]
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "region": "global",
+      "match": "exact",
+      "aliases": [
+        "amazon",
+        "amazon com",
+        "amazon prime",
+        "amazon sg"
+      ],
+      "domains": [
+        "amazon.com",
+        "amazon.sg"
+      ]
+    },
+    {
+      "id": "netflix",
+      "name": "Netflix",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "netflix"
+      ],
+      "domains": [
+        "netflix.com"
+      ]
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "region": "global",
+      "match": "exact",
+      "aliases": [
+        "facebook",
+        "meta",
+        "facebook meta"
+      ],
+      "domains": [
+        "facebook.com",
+        "meta.com"
+      ]
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "instagram"
+      ],
+      "domains": [
+        "instagram.com"
+      ]
+    },
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "whatsapp"
+      ],
+      "domains": [
+        "whatsapp.com"
+      ]
+    },
+    {
+      "id": "dhl",
+      "name": "DHL",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "dhl",
+        "dhl express"
+      ],
+      "domains": [
+        "dhl.com"
+      ]
+    },
+    {
+      "id": "fedex",
+      "name": "FedEx",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "fedex"
+      ],
+      "domains": [
+        "fedex.com"
+      ]
+    },
+    {
+      "id": "nike",
+      "name": "Nike",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "nike"
+      ],
+      "domains": [
+        "nike.com"
+      ]
+    },
+    {
+      "id": "docusign",
+      "name": "DocuSign",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "docusign"
+      ],
+      "domains": [
+        "docusign.com",
+        "docusign.net"
+      ]
+    },
+    {
+      "id": "binance",
+      "name": "Binance",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "binance"
+      ],
+      "domains": [
+        "binance.com"
+      ]
+    },
+    {
+      "id": "coinbase",
+      "name": "Coinbase",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "coinbase"
+      ],
+      "domains": [
+        "coinbase.com"
+      ]
+    },
+    {
+      "id": "samsung",
+      "name": "Samsung",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "samsung",
+        "삼성",
+        "삼성전자"
+      ],
+      "domains": [
+        "samsung.com"
+      ]
+    },
+    {
+      "id": "videolan",
+      "name": "VideoLAN",
+      "region": "global",
+      "match": "token",
+      "aliases": [
+        "videolan",
+        "vlc",
+        "vlc media player"
+      ],
+      "domains": [
+        "videolan.org"
+      ]
+    }
+  ]
+}

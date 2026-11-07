@@ -1,0 +1,25 @@
+[project]
+name = "redflag-backend"
+version = "0.1.0"
+description = "RedFlag Cloud: FastAPI + SSE, Opus agent loop, sandbox tools, shared rule engine"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "anthropic",
+  "httpx",
+  "jsonschema",
+]
+
+[dependency-groups]
+dev = ["pytest", "pytest-asyncio"]
+sandbox = ["playwright"]
+
+[tool.uv]
+# Master prompt rule: no release younger than 2 weeks (session date 2026-11-04).
+exclude-newer = "2026-10-21T00:00:00Z"
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

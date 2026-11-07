@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RedFlag</string>
+    <string name="tagline">Checks unfamiliar pages on your phone before you open them.</string>
+    <string name="a11y_service_label">RedFlag link guard</string>
+    <string name="a11y_service_description">Reads the Chrome address bar so RedFlag can check unfamiliar sites before you interact with them. Page contents are analyzed on this device.</string>
+
+    <!-- levels -->
+    <string name="level_safe">Safe</string>
+    <string name="level_caution">Caution</string>
+    <string name="level_danger">Danger</string>
+    <string name="level_critical">Critical</string>
+    <string name="level_unknown">Unverified</string>
+    <string name="score_label">Risk score</string>
+
+    <!-- analysis steps -->
+    <string name="step_gate">Checking the address</string>
+    <string name="step_safe_browsing">Looking up Google Safe Browsing</string>
+    <string name="step_extract">Opening the page in a sealed sandbox</string>
+    <string name="step_signals">Checking domain age and certificate</string>
+    <string name="step_gemma">Reading the page with on-device Gemma</string>
+    <string name="step_score">Scoring the evidence</string>
+    <string name="waiting_title">Checking this page</string>
+    <string name="skip_check">Skip check and open</string>
+    <string name="skip_check_hint">The page opens without a verdict. Don\'t enter anything you\'re unsure about.</string>
+    <string name="waiting_subtitle">Nothing you see here leaves your phone.</string>
+    <string name="on_device_badge">On-device</string>
+
+    <!-- result screens -->
+    <string name="block_title">RedFlag stopped this page</string>
+    <string name="block_why">Why we stopped it</string>
+    <string name="block_go_back">Go back to safety</string>
+    <string name="block_open_anyway">I understand the risk, open it</string>
+    <string name="caution_title">RedFlag found some warning signs</string>
+    <string name="caution_open">Open anyway</string>
+    <string name="caution_deep">Deep analysis</string>
+    <string name="caution_deep_hint">Recommended. Runs only if you tap it: our cloud agent (Anthropic Claude) opens the page in an isolated browser and double-checks it. A situation you described or a message you pasted goes along, with numbers hidden.</string>
+    <string name="unverified_title">We couldn\'t check this page in time</string>
+    <string name="unverified_body">The page took too long to analyze. If you didn\'t expect this link, don\'t enter anything.</string>
+    <string name="safe_title">Looks fine</string>
+    <string name="safe_continue">Continue</string>
+    <string name="second_opinion">Ask the cloud for a second opinion</string>
+    <string name="address_label">Address</string>
+
+    <!-- cloud -->
+    <string name="cloud_title">Deep analysis</string>
+    <string name="cloud_running">Cloud agent at work…</string>
+    <string name="cloud_done">Cloud verdict</string>
+    <string name="cloud_failed">Deep analysis failed: %1$s</string>
+    <string name="cloud_cloaking">This site showed our cloud browser a different page than it showed you.</string>
+    <string name="cloud_vs_lite">On your phone: %1$s · In the cloud: %2$s</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_title">Two switches and you\'re protected</string>
+    <string name="onboarding_browser_title">Check links from other apps</string>
+    <string name="onboarding_browser_body">Set RedFlag as the default browser. Safe links go straight to Chrome.</string>
+    <string name="onboarding_a11y_title">Check sites inside Chrome</string>
+    <string name="onboarding_a11y_body">Let RedFlag read Chrome\'s address bar and cover unfamiliar pages until they\'re checked.</string>
+    <string name="onboarding_enable">Turn on</string>
+    <string name="onboarding_enabled">On</string>
+    <string name="onboarding_privacy">Pages are read by Gemma on this phone; the page itself never leaves it. Only the site\'s domain name is looked up in public registries. Only when you ask for advanced analysis does the link go to the cloud, together with any situation you described or message you pasted (numbers hidden). Never automatically, not even when it is recommended, and chats read from notifications are never sent.</string>
+    <string name="onboarding_done">Done</string>
+
+    <!-- settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_mode">Analysis mode</string>
+    <string name="mode_lite">On-device only</string>
+    <string name="mode_lite_desc">Nothing leaves your phone. Advanced analysis is turned off.</string>
+    <string name="settings_backend">Backend URL</string>
+    <string name="settings_engine">On-device engine</string>
+    <string name="engine_real">Gemma 4 E4B (LiteRT-LM)</string>
+    <string name="engine_fake">Demo engine (fixtures)</string>
+    <string name="engine_model_missing">Model file not found. Push it to %1$s</string>
+    <string name="home_recent">Recent checks</string>
+    <string name="home_empty">No checks yet. Tap a link in any app.</string>
+    <string name="home_try">Try a demo link</string>
+    <string name="badge_checked">Checked by RedFlag</string>
+    <string name="sb_attribution">Advisory provided by Google. Google works to provide the most accurate and up-to-date information about unsafe web resources, but cannot guarantee it is comprehensive or error-free.</string>
+    <string name="revisit_banner">You came back to a site RedFlag already blocked</string>
+    <string name="context_listener_label">RedFlag context check</string>
+    <string name="context_access_title">Context check (notifications)</string>
+    <string name="context_access_body">Lets RedFlag look at the message that carried a risky link, only when you allow it for that link. Kept in memory, never sent.</string>
+    <string name="context_settings_title">Context analyzer</string>
+    <string name="context_settings_body">Ask how you got a link when it matters (payments, app installs, refunds). Every step can be skipped.</string>
+    <string name="context_reset_never">Ask about context again</string>
+    <string name="mode_on_request">Advanced on request</string>
+    <string name="mode_on_request_desc">On-device first. Advanced (cloud) analysis runs only when you tap it, even when RedFlag recommends it; then a situation you described or a message you pasted goes along (numbers hidden).</string>
+
+    <!-- In-app link check (docs/plans/manual_url_check.md) -->
+    <string name="check_card_title">Check a link</string>
+    <string name="check_card_hint">Paste a link or the message you got</string>
+    <string name="check_card_paste">Paste</string>
+    <string name="check_card_go">Check</string>
+    <string name="check_card_found">Links found</string>
+    <string name="check_card_none">No link found. Check the address.</string>
+    <string name="check_card_add_situation">Add the situation (optional)</string>
+    <string name="check_card_situation_hint">e.g. A seller in a used-goods trade sent a \"safe payment\" link</string>
+    <string name="check_card_note">Checked before it is opened. A pasted message is used as context.</string>
+    <string name="check_pick_title">Found %1$d links</string>
+    <string name="check_pick_body">Pick the link to check.</string>
+    <string name="check_no_link">No link found</string>
+    <string name="check_no_link_body">Make sure the text has an address starting with http or a domain like example.com.</string>
+    <string name="check_known_title">A well-known site</string>
+    <string name="check_known_brand">This is the official domain of %1$s (%2$s).</string>
+    <string name="check_known_popular">%1$s is a widely used site.</string>
+    <string name="check_known_hint">Posts or messages hosted on a well-known site can still be scams.</string>
+    <string name="check_known_anyway">Check it anyway</string>
+    <string name="inspect_close">Close</string>
+    <string name="inspect_cancel">Cancel check</string>
+    <string name="inspect_open_chrome">Open in Chrome</string>
+    <string name="inspect_recheck">Check again</string>
+    <string name="inspect_other_links">Other links in the same message</string>
+    <string name="inspect_stored_banner">A stored verdict</string>
+    <string name="share_check_label">Check with RedFlag</string>
+    <string name="shortcut_check_short">Check a link</string>
+    <string name="shortcut_check_long">Check a link before opening it</string>
+    <string name="cloud_context_disclosure">Sent along: %1$d situation note(s) · %2$d pasted message(s) (numbers hidden)</string>
+    <string name="cloud_context_preview">Show what is sent</string>
+    <string name="cloud_context_hide">Hide</string>
+    <string name="cloud_context_waiting">Starts once you answer or skip the question</string>
+    <string name="cloud_context_rerun">Analyse again with your note</string>
+    <string name="settings_always_reanalyze">Always re-check (demo)</string>
+    <string name="settings_always_reanalyze_body">Sites already checked are analysed again: no 12-hour safe cache, no replay of a stored block.</string>
+    <string name="unverified_unreachable_title">The site is not responding</string>
+    <string name="unverified_unreachable_body">The site is down or the address does not exist. While it does not open there is nothing to type into. If a message sent you this link, do not open it again.</string>
+    <string name="unverified_blocked_title">The site kept the check out</string>
+    <string name="unverified_blocked_body">This site does not let security scanners in, so RedFlag could not see the page. If you do not know the site, do not enter anything.</string>
+    <string name="settings_full_cover">Cover the screen while checking</string>
+    <string name="settings_full_cover_body">While Chrome opens an unfamiliar site, cover the whole screen (the old behaviour). Off: a small pill at the top, full screen only when there is danger.</string>
+    <string name="pill_checking">Checking</string>
+    <string name="pill_safe">Safe</string>
+    <string name="pill_caution">Caution · tap to see</string>
+    <string name="pill_unverified">Not verified · tap to see</string>
+    <string name="pill_question">One question for you</string>
+    <string name="pill_a11y">RedFlag check status. Tap for details</string>
+    <string name="cover_collapse">Show small</string>
+    <string name="cover_input_guard">Typing is paused until the check is done</string>
+    <string name="cover_input_guard_password">This site is not verified safe yet. Check before you enter a password</string>
+    <string name="chat_back">Back</string>
+    <string name="chat_hint">Paste a link or a message you got</string>
+    <string name="chat_send">Send</string>
+    <string name="chat_intro">Paste a link or a message you received. I check it on this phone before you open it.</string>
+    <string name="chat_intro_more">After a check, tell me how you got it without a link (e.g. "a number I don\'t know texted me") and I will take it into account.</string>
+    <string name="chat_setup">%d steps left to protect links automatically when you tap them.</string>
+    <string name="chat_protected">Protected</string>
+    <string name="chat_setup_needed">Setup</string>
+    <string name="chat_history">Earlier checks</string>
+    <string name="chat_no_link">I could not find a link. Paste a link, or the message that has one.</string>
+    <string name="chat_resolving">Looking up the address…</string>
+    <string name="chat_cancelled">Stopped checking %s.</string>
+    <string name="chat_detail">Details</string>
+    <string name="chat_cloud_running">Advanced analysis running…</string>
+    <string name="chat_cloud_done">Advanced analysis: %1$s %2$d</string>
+    <string name="chat_cloud_failed">Advanced analysis did not finish. The on-device verdict stands.</string>
+    <string name="chat_rejudge_pending">I will take your situation into account once the verdict is in.</string>
+    <string name="chat_rejudge_running">Taking your situation into account…</string>
+    <string name="chat_rejudge_raised">Your situation added %1$d points. Now: %2$s %3$d</string>
+    <string name="chat_rejudge_same">Taken into account. The verdict stays: %1$s %2$d</string>
+    <string name="chat_rejudge_unavailable">Your situation could not be applied to this check.</string>
+</resources>

@@ -1,0 +1,160 @@
+{
+  "schema_version": "1",
+  "id": "8557f858-851c-59ff-b841-cf23e152d126",
+  "mode": "cloud",
+  "status": "complete",
+  "url": "https://dbs-secure-verify.top/login?ref=sms",
+  "final_url": "https://dbs-secure-verify.top/login?ref=sms",
+  "registrable_domain": "dbs-secure-verify.top",
+  "score": 100,
+  "level": "critical",
+  "escalate": false,
+  "headline": {
+    "en": "This page is impersonating DBS",
+    "ko": "DBS 사칭이 의심되는 페이지예요"
+  },
+  "red_flags": [
+    {
+      "rule_id": "brand_mismatch_known_brand",
+      "severity": "high",
+      "source": "opus+rule",
+      "weight": 40,
+      "title": {
+        "en": "Pretends to be DBS on a different domain",
+        "ko": "DBS 공식 주소가 아닌데 DBS인 척해요"
+      },
+      "evidence": "© DBS Bank Ltd. All rights reserved."
+    },
+    {
+      "rule_id": "new_domain",
+      "severity": "medium",
+      "source": "signal+rule",
+      "weight": 25,
+      "title": {
+        "en": "This site was created only 4 days ago",
+        "ko": "만들어진 지 4일밖에 안 된 사이트예요"
+      },
+      "evidence": "domain_age_days: 4"
+    },
+    {
+      "rule_id": "brand_mismatch_sensitive_request",
+      "severity": "high",
+      "source": "opus+rule",
+      "weight": 20,
+      "title": {
+        "en": "Asks for your password, card or codes while posing as DBS",
+        "ko": "DBS인 척하면서 비밀번호·카드·인증번호를 요구해요"
+      },
+      "evidence": null
+    },
+    {
+      "rule_id": "sensitive_form_cross_site",
+      "severity": "medium",
+      "source": "signal+rule",
+      "weight": 20,
+      "title": {
+        "en": "Sends what you type to another site (api-collect.click)",
+        "ko": "입력한 정보를 다른 사이트(api-collect.click)로 보내요"
+      },
+      "evidence": "form action: api-collect.click"
+    },
+    {
+      "rule_id": "urgency_or_threat",
+      "severity": "low",
+      "source": "opus+rule",
+      "weight": 10,
+      "title": {
+        "en": "Pressures you to act right now",
+        "ko": "지금 당장 하라고 재촉해요"
+      },
+      "evidence": null
+    }
+  ],
+  "brand": {
+    "claimed": "DBS",
+    "official_domains": [
+      "dbs.com.sg",
+      "dbs.com",
+      "posb.com.sg"
+    ],
+    "matches": false
+  },
+  "signals": {
+    "domain_age_days": 4,
+    "tls_issuer": "Let's Encrypt",
+    "cert_age_days": 3,
+    "safe_browsing": "no_match",
+    "redirect_count": 0,
+    "punycode": false,
+    "homoglyph": false,
+    "forms": [
+      {
+        "action_domain": "api-collect.click",
+        "same_site": false,
+        "sensitive_fields": [
+          "password"
+        ]
+      }
+    ],
+    "external_link_domains": [
+      "dbs.com.sg"
+    ]
+  },
+  "features": {
+    "evidence": [
+      "© DBS Bank Ltd. All rights reserved."
+    ],
+    "claimed_brand": "DBS",
+    "brand_matches_domain": "no",
+    "page_type": "login",
+    "requested_actions": [
+      "enter_password"
+    ],
+    "urgency_or_threat": true,
+    "too_good_to_be_true": false,
+    "addresses_ai_analyzer": false,
+    "verdict": "malicious",
+    "confidence": "high",
+    "form_posts_cross_site": true,
+    "downloads_attempted": false,
+    "official_domain_found": "dbs.com.sg"
+  },
+  "cloaking": {
+    "suspected": false,
+    "detail": null
+  },
+  "trace": [
+    {
+      "t_ms": 0,
+      "step": "start",
+      "detail": "cloud analysis"
+    },
+    {
+      "t_ms": 5200,
+      "step": "sandbox_browse",
+      "detail": "1 form -> api-collect.click"
+    },
+    {
+      "t_ms": 6100,
+      "step": "rdap",
+      "detail": "registered 4 days ago"
+    },
+    {
+      "t_ms": 9800,
+      "step": "web_search",
+      "detail": "official domain: dbs.com.sg"
+    },
+    {
+      "t_ms": 21300,
+      "step": "submit_report",
+      "detail": "claimed_brand=DBS"
+    }
+  ],
+  "engine": {
+    "model": "claude-opus-5-5",
+    "runtime": "anthropic-api",
+    "think": false
+  },
+  "latency_ms": 21400,
+  "created_at": "2026-11-05T01:23:45Z"
+}

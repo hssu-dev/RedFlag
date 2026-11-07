@@ -1,0 +1,60 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+build/
+
+# RedFlag
+models/
+*.litertlm
+redflag-gemma-test/.venv
+# Android / Gradle
+.gradle/
+**/build/
+local.properties
+*.apk
+*.aab
+.kotlin/
+captures/
+# Backend runtime state
+backend/data/
+*.sqlite
+*.sqlite3
+# Large eval artifacts (keep reports and small jsonl)
+eval/real/raw/
+eval/real/screens/
+eval/device/raw/
+eval/device/context_demo/*.mp4
+eval/device/inspect_demo/*.mp4
+# Large local recordings / runtime logs
+eval/device/demo_video/
+eval/device/**/*.log
+# Public-repo hygiene: kept locally, never committed
+# - demo pages that imitate real brands (credential/payment forms)
+demo-pages/dbs/
+demo-pages/m365/
+demo-pages/shop/
+demo-pages/parcel/
+demo-pages/cj/
+# - live phishing URLs from the OpenPhish feed (regenerate with eval/real/collect.py)
+eval/real/cases_real.jsonl
+eval/real/collect_log.json
+eval/real/sb_recheck.json
+eval/real/sb_missed_phishing.txt

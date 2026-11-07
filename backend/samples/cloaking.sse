@@ -1,0 +1,40 @@
+: redflag sse
+
+event: trace
+data: {"t_ms": 0, "step": "start", "detail": "cloud analysis of https://singpost-redelivery.info/ [DEMO_MODE]"}
+
+event: trace
+data: {"t_ms": 1, "step": "cache", "detail": "miss"}
+
+event: trace
+data: {"t_ms": 19, "step": "cert", "detail": "singpost-redelivery.info: Let's Encrypt, newest cert 6 days old (demo override)"}
+
+event: trace
+data: {"t_ms": 19, "step": "rdap", "detail": "singpost-redelivery.info: registered 6 days ago (demo override)"}
+
+event: trace
+data: {"t_ms": 19, "step": "safe_browsing", "detail": "no_match (stub)"}
+
+event: trace
+data: {"t_ms": 1464, "step": "sandbox_browse", "detail": "https://singpost-redelivery.info/ | title 'Parcel Delivery Tips' | 0 form(s), 0 sensitive | hidden text 0 chars | 0 redirect(s)"}
+
+event: trace
+data: {"t_ms": 1480, "step": "opus", "detail": "round 1: request sent (claude-opus-5-5, effort=medium)"}
+
+: keepalive
+
+event: trace
+data: {"t_ms": 9702, "step": "opus", "detail": "round 1: stop_reason=tool_use, tools=['submit_report']"}
+
+event: trace
+data: {"t_ms": 9702, "step": "submit_report", "detail": "claimed_brand=None, verdict=suspicious, ai_text=False, official=None"}
+
+event: trace
+data: {"t_ms": 9706, "step": "cloaking", "detail": "SUSPECTED: The device saw a password/card/code form, the sandbox saw none; the device page claimed 'SingPost', the sandbox page shows no 'SingPost'; titles differ: device 'SingPost | Redelivery' vs sandbox 'Parcel Delivery Tips'"}
+
+event: trace
+data: {"t_ms": 9706, "step": "scoring", "detail": "score 60 -> danger (cloaking_suspected, new_domain)"}
+
+event: report
+data: {"schema_version": "1", "id": "d445224e-e7b8-4c56-adea-a4d9885d42e8", "mode": "cloud", "status": "complete", "url": "https://singpost-redelivery.info/", "final_url": "https://singpost-redelivery.info/", "registrable_domain": "singpost-redelivery.info", "score": 60, "level": "danger", "escalate": true, "headline": {"en": "This page hides its real face from scanners", "ko": "검사기 앞에서 정체를 숨기는 페이지예요"}, "red_flags": [{"rule_id": "cloaking_suspected", "severity": "high", "source": "signal+rule", "weight": 35, "title": {"en": "Shows a different page to security scanners", "ko": "보안 검사기에는 다른 화면을 보여줘요"}, "evidence": null}, {"rule_id": "new_domain", "severity": "medium", "source": "signal+rule", "weight": 25, "title": {"en": "This site was created only 6 days ago", "ko": "만들어진 지 6일밖에 안 된 사이트예요"}, "evidence": "domain_age_days: 6"}], "brand": {"claimed": null, "official_domains": [], "matches": null}, "signals": {"domain_age_days": 6, "tls_issuer": "Let's Encrypt", "cert_age_days": 6, "safe_browsing": "no_match", "redirect_count": 0, "punycode": false, "homoglyph": false, "forms": [], "external_link_domains": []}, "features": {"evidence": ["5 tips for smoother parcel deliveries", "Never pay a \"redelivery fee\" through a link in an SMS.", "Track your parcel only through the courier's official app."], "claimed_brand": null, "brand_matches_domain": "no_brand", "page_type": "info", "requested_actions": ["none"], "urgency_or_threat": false, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "suspicious", "confidence": "medium", "form_posts_cross_site": false, "downloads_attempted": false, "official_domain_found": null}, "cloaking": {"suspected": true, "detail": "The device saw a password/card/code form, the sandbox saw none; the device page claimed 'SingPost', the sandbox page shows no 'SingPost'; titles differ: device 'SingPost | Redelivery' vs sandbox 'Parcel Delivery Tips'"}, "trace": [{"t_ms": 0, "step": "start", "detail": "cloud analysis of https://singpost-redelivery.info/ [DEMO_MODE]"}, {"t_ms": 1, "step": "cache", "detail": "miss"}, {"t_ms": 19, "step": "cert", "detail": "singpost-redelivery.info: Let's Encrypt, newest cert 6 days old (demo override)"}, {"t_ms": 19, "step": "rdap", "detail": "singpost-redelivery.info: registered 6 days ago (demo override)"}, {"t_ms": 19, "step": "safe_browsing", "detail": "no_match (stub)"}, {"t_ms": 1464, "step": "sandbox_browse", "detail": "https://singpost-redelivery.info/ | title 'Parcel Delivery Tips' | 0 form(s), 0 sensitive | hidden text 0 chars | 0 redirect(s)"}, {"t_ms": 1480, "step": "opus", "detail": "round 1: request sent (claude-opus-5-5, effort=medium)"}, {"t_ms": 9702, "step": "opus", "detail": "round 1: stop_reason=tool_use, tools=['submit_report']"}, {"t_ms": 9702, "step": "submit_report", "detail": "claimed_brand=None, verdict=suspicious, ai_text=False, official=None"}, {"t_ms": 9706, "step": "cloaking", "detail": "SUSPECTED: The device saw a password/card/code form, the sandbox saw none; the device page claimed 'SingPost', the sandbox page shows no 'SingPost'; titles differ: device 'SingPost | Redelivery' vs sandbox 'Parcel Delivery Tips'"}, {"t_ms": 9706, "step": "scoring", "detail": "score 60 -> danger (cloaking_suspected, new_domain)"}], "engine": {"model": "claude-opus-5-5", "runtime": "anthropic-messages-api", "think": true}, "latency_ms": 9706, "created_at": "2026-11-03T18:51:41Z"}
+

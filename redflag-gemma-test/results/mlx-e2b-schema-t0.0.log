@@ -1,0 +1,33 @@
+10 cases x 1 runs | mode=schema-t0.0 | backend=openai | model=gemma-4-e2b-mlx
+
+dbs_phish                1.53s  verdict=suspicious FAIL verdict
+bakery_new_legit         1.54s  verdict=safe       FAIL too_good_to_be_true
+fakeshop_nike            1.54s  verdict=suspicious FAIL brand_matches_domain,verdict
+kr_parcel_smishing       1.81s  verdict=suspicious FAIL brand_matches_domain,verdict,requested_actions
+injection_m365           1.72s  verdict=suspicious FAIL verdict
+saas_login_legit         1.32s  verdict=safe       PASS
+crypto_seed_scam         1.66s  verdict=malicious  FAIL brand_matches_domain
+tech_support_scam        1.53s  verdict=suspicious FAIL brand_matches_domain,verdict
+event_tickets_legit      1.42s  verdict=suspicious FAIL too_good_to_be_true
+kr_catcafe_info          1.80s  verdict=safe       FAIL claimed_brand,brand_matches_domain
+
+================================================================
+requests            10  (errors 0)
+JSON parsed         10/10 = 100%
+  clean output      10/10  (pure JSON, nothing around it)
+schema valid        10/10 = 100%
+field accuracy
+  claimed_brand          9/10 = 90%
+  brand_matches_domain   5/10 = 50%
+  verdict                5/10 = 50%
+  urgency_or_threat      9/9 = 100%
+  too_good_to_be_true    5/7 = 71%
+  addresses_ai_analyzer  10/10 = 100%
+  requested_actions      9/10 = 90%
+malicious caught    6/6  (strict 'malicious' 1/6)
+benign false alarm  0/4  (marked suspicious 1/4)
+evidence verbatim   100%
+latency (s)         mean 1.59  median 1.54  max 1.81
+completion tokens   mean 144
+
+raw results -> results/mlx-e2b-schema-t0.0.jsonl

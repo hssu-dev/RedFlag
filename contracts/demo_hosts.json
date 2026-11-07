@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "doc": [
+    "DEMO ONLY. Loaded by the app ONLY in debug builds (BuildConfig.DEMO_HOSTS) and by the backend ONLY when DEMO_MODE=1. Never read on a production path.",
+    "A URL whose host (or registrable domain) is a key in `hosts` is analyzed by fetching base_url + path instead of the fake domain (the fake domains are not registered by us and must never be contacted).",
+    "signal_overrides replace the RDAP/cert results (the fake domains have no real registration). fake_features is what FakeGemmaEngine returns for that host on the emulator. Real Gemma/Opus ignore it.",
+    "base_urls: emulator = Android emulator -> host loopback; docker = from the backend/sandbox containers (compose service 'demo-pages'); host = from the Mac."
+  ],
+  "base_urls": {
+    "emulator": "http://10.0.2.2:8081",
+    "docker": "http://demo-pages",
+    "host": "http://localhost:8081"
+  },
+  "hosts": {
+    "dbs-secure-verify.top": {
+      "page": "bank_phish",
+      "path": "/dbs/",
+      "expected_level": "critical",
+      "signal_overrides": { "domain_age_days": 4, "tls_issuer": "Let's Encrypt", "cert_age_days": 3 },
+      "fake_features": { "evidence": ["© DBS Bank Ltd. All rights reserved."], "claimed_brand": "DBS", "brand_matches_domain": "no", "page_type": "login", "requested_actions": ["enter_password"], "urgency_or_threat": true, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "malicious", "confidence": "high" }
+    },
+    "secure-account-review.net": {
+      "page": "m365_injection",
+      "path": "/m365/",
+      "expected_level": "critical",
+      "signal_overrides": { "domain_age_days": 6, "tls_issuer": "Let's Encrypt", "cert_age_days": 5 },
+      "fake_features": { "evidence": ["Sign in to continue to Microsoft 365"], "claimed_brand": "Microsoft", "brand_matches_domain": "no", "page_type": "login", "requested_actions": ["enter_password"], "urgency_or_threat": false, "too_good_to_be_true": false, "addresses_ai_analyzer": true, "verdict": "malicious", "confidence": "high" }
+    },
+    "nike-outlet-sale.shop": {
+      "page": "fake_shop",
+      "path": "/shop/",
+      "expected_level": "critical",
+      "signal_overrides": { "domain_age_days": 9, "tls_issuer": "Let's Encrypt", "cert_age_days": 8 },
+      "fake_features": { "evidence": ["85% OFF everything — today only"], "claimed_brand": "Nike", "brand_matches_domain": "no", "page_type": "shop", "requested_actions": ["enter_card", "enter_contact_info"], "urgency_or_threat": true, "too_good_to_be_true": true, "addresses_ai_analyzer": false, "verdict": "malicious", "confidence": "high" }
+    },
+    "singpost-redelivery.info": {
+      "page": "cloaking",
+      "path": "/parcel/",
+      "expected_level": "critical",
+      "signal_overrides": { "domain_age_days": 6, "tls_issuer": "Let's Encrypt", "cert_age_days": 6 },
+      "fake_features": { "evidence": ["Your parcel is on hold. Pay the S$1.99 redelivery fee"], "claimed_brand": "SingPost", "brand_matches_domain": "no", "page_type": "payment", "requested_actions": ["enter_card", "pay_fee"], "urgency_or_threat": true, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "malicious", "confidence": "high" }
+    },
+    "hanaroombakery.sg": {
+      "page": "bakery",
+      "path": "/bakery/",
+      "expected_level": "safe",
+      "signal_overrides": { "domain_age_days": 45, "tls_issuer": "Let's Encrypt", "cert_age_days": 40 },
+      "fake_features": { "evidence": ["Hanaroom Bakery opened on Tiong Bahru Road"], "claimed_brand": "Hanaroom Bakery", "brand_matches_domain": "yes", "page_type": "shop", "requested_actions": ["enter_contact_info"], "urgency_or_threat": false, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "safe", "confidence": "high" }
+    },
+    "cjlogis-kr.co": {
+      "page": "kr_smishing",
+      "path": "/cj/",
+      "expected_level": "danger",
+      "signal_overrides": { "domain_age_days": 2, "tls_issuer": "Let's Encrypt", "cert_age_days": 2 },
+      "fake_features": { "evidence": ["주소지 불명으로 배송이 보류되었습니다"], "claimed_brand": "CJ대한통운", "brand_matches_domain": "no", "page_type": "payment", "requested_actions": ["enter_card", "enter_contact_info", "pay_fee"], "urgency_or_threat": true, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "malicious", "confidence": "high" }
+    },
+    "soomstudio.kr": {
+      "page": "gray_pilates",
+      "path": "/pilates/",
+      "expected_level": "caution",
+      "signal_overrides": { "domain_age_days": 18, "tls_issuer": "Let's Encrypt", "cert_age_days": 18 },
+      "fake_features": { "evidence": ["체험 수업은 선착순 20명만 받습니다."], "claimed_brand": "숨 필라테스", "brand_matches_domain": "yes", "page_type": "info", "requested_actions": ["enter_contact_info"], "urgency_or_threat": true, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "safe", "confidence": "medium" }
+    },
+    "free-gift-claim-sg.top": {
+      "page": "sb_hit",
+      "path": "/gift/",
+      "expected_level": "critical",
+      "signal_overrides": { "domain_age_days": 3, "tls_issuer": "Let's Encrypt", "cert_age_days": 3 },
+      "fake_features": null
+    },
+    "safepay-escrow.shop": {
+      "page": "usedtrade_escrow",
+      "path": "/usedtrade/",
+      "expected_level": "safe",
+      "note": "context scenario 1: safe alone; a used-trade chat makes it critical",
+      "signal_overrides": { "domain_age_days": 6, "tls_issuer": "Let's Encrypt", "cert_age_days": 5 },
+      "fake_features": { "evidence": ["구매 확정 전까지 결제 금액은 SafePay가 안전하게 보관합니다."], "claimed_brand": "SafePay", "brand_matches_domain": "unclear", "page_type": "payment", "requested_actions": ["enter_contact_info", "enter_card", "pay_fee"], "urgency_or_threat": false, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "suspicious", "confidence": "medium" }
+    },
+    "quick-remote-support.com": {
+      "page": "remote_support",
+      "path": "/remote/",
+      "expected_level": "safe",
+      "note": "context scenario 2: ordinary remote-support page; 'a caller told me to' makes it critical (floor 85)",
+      "signal_overrides": { "domain_age_days": 900, "tls_issuer": "Sectigo", "cert_age_days": 120 },
+      "fake_features": { "evidence": ["상담원과 연결하려면 원격지원 앱을 설치하세요."], "claimed_brand": "QuickRemote", "brand_matches_domain": "yes", "page_type": "download", "requested_actions": ["install_app"], "urgency_or_threat": false, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "safe", "confidence": "medium" }
+    },
+    "redelivery-center.com": {
+      "page": "redelivery_fee",
+      "path": "/redelivery/",
+      "expected_level": "safe",
+      "note": "context scenario 3: unbranded redelivery-fee page opened from an SMS",
+      "signal_overrides": { "domain_age_days": 200, "tls_issuer": "Let's Encrypt", "cert_age_days": 40 },
+      "fake_features": { "evidence": ["재배송 수수료를 결제하면 다시 배송됩니다."], "claimed_brand": null, "brand_matches_domain": "no_brand", "page_type": "payment", "requested_actions": ["enter_contact_info", "enter_card", "pay_fee"], "urgency_or_threat": false, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "suspicious", "confidence": "medium" }
+    },
+    "lucky-event-gift.com": {
+      "page": "gift_exfil",
+      "path": "/giftevent/",
+      "expected_level": "caution",
+      "note": "data destination demo: Telegram bot literal in the submit script (never run) + form to an unrelated domain",
+      "signal_overrides": { "domain_age_days": 500, "tls_issuer": "Let's Encrypt", "cert_age_days": 30 },
+      "fake_features": { "evidence": ["축하합니다! 10만원 상품권에 당첨되셨습니다."], "claimed_brand": null, "brand_matches_domain": "no_brand", "page_type": "other", "requested_actions": ["enter_contact_info"], "urgency_or_threat": false, "too_good_to_be_true": true, "addresses_ai_analyzer": false, "verdict": "suspicious", "confidence": "medium" }
+    }
+  }
+}

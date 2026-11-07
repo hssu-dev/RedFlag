@@ -1,0 +1,560 @@
+{
+  "version": 1,
+  "doc": [
+    "Gate order (android/core Gate.evaluate): 1 normalize (lowercase, IDN->punycode, strip trailing dot/port/userinfo, PSL incl. private section -> registrable_domain)",
+    "2 Safe Browsing (stub in this build) hit -> Block(safe_browsing)",
+    "3 always-analyze exceptions: shortener host -> Unknown(shortener) [caller resolves redirects and gates the final URL again]; ugc match -> Unknown(ugc)",
+    "4 known-good: registrable_domain in brand_domains.json, Tranco top-100k set, or the safe-verdict cache -> Pass",
+    "5 everything else -> Unknown(unknown_domain). Hosts that are IP literals -> Unknown(ip_host); no registrable domain (bare public suffix / localhost) -> Unknown(no_registrable_domain)",
+    "Matching: shorteners/ugc compare against the normalized host. match=exact -> host equals; match=suffix -> host equals or ends with '.'+host. paths are case-sensitive prefixes of the URL path; '/' = any path."
+  ],
+  "shorteners": [
+    "bit.ly",
+    "t.co",
+    "tinyurl.com",
+    "goo.gl",
+    "ow.ly",
+    "is.gd",
+    "buff.ly",
+    "rebrand.ly",
+    "cutt.ly",
+    "t.ly",
+    "rb.gy",
+    "shorturl.at",
+    "tiny.cc",
+    "bit.do",
+    "lnkd.in",
+    "s.id",
+    "me2.do",
+    "naver.me",
+    "url.kr",
+    "vo.la",
+    "forms.gle",
+    "1drv.ms",
+    "amzn.to",
+    "qrco.de",
+    "shorturl.asia",
+    "han.gl",
+    "goo.su",
+    "v.gd"
+  ],
+  "ugc": [
+    {
+      "host": "docs.google.com",
+      "match": "exact",
+      "paths": [
+        "/forms",
+        "/document",
+        "/presentation",
+        "/spreadsheets",
+        "/drawings"
+      ]
+    },
+    {
+      "host": "sites.google.com",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "drive.google.com",
+      "match": "exact",
+      "paths": [
+        "/file",
+        "/drive/folders",
+        "/uc"
+      ]
+    },
+    {
+      "host": "script.google.com",
+      "match": "exact",
+      "paths": [
+        "/macros"
+      ]
+    },
+    {
+      "host": "storage.googleapis.com",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "firebasestorage.googleapis.com",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "forms.office.com",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "forms.microsoft.com",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "onedrive.live.com",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "sharepoint.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "dropbox.com",
+      "match": "suffix",
+      "paths": [
+        "/s/",
+        "/scl/"
+      ]
+    },
+    {
+      "host": "notion.site",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wixsite.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "weebly.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "webflow.io",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "blogspot.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wordpress.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "godaddysites.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "square.site",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "carrd.co",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "linktr.ee",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "telegra.ph",
+      "match": "exact",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "ipfs.io",
+      "match": "suffix",
+      "paths": [
+        "/ipfs/"
+      ]
+    },
+    {
+      "host": "backblazeb2.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wasabisys.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "contabostorage.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "b-cdn.net",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "mybluehost.me",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "hostingersite.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "000webhostapp.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "glitch.me",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "rf.gd",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "free.nf",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "epizy.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "infinityfreeapp.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "42web.io",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wuaze.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "kinsta.cloud",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "flywheelsites.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wpengine.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wpcomstaging.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "siteground.biz",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "canva.site",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "jimdosite.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "mystrikingly.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "tilda.ws",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "site123.me",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "webnode.page",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "weeblysite.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "sitey.me",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "webador.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "tiiny.site",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "durable.co",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "bio.link",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "ucoz.net",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "zohosites.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "salesforce-sites.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "hubspotpagebuilder.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "mailchimpsites.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "wixstatic.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "squarespace.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "jotform.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "typeform.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "formstack.com",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "qrco.de",
+      "match": "suffix",
+      "paths": [
+        "/"
+      ]
+    },
+    {
+      "host": "oraclecloud.com",
+      "match": "suffix",
+      "paths": [
+        "/n/",
+        "/p/"
+      ]
+    }
+  ],
+  "safe_browsing_stub": {
+    "doc": "Default Safe Browsing provider (no API key). A URL is a hit if its normalized form (scheme dropped, host lowercased) starts with one of url_prefixes, or its registrable_domain is in domains. url_prefixes are Google's official test pages (testsafebrowsing.appspot.com) + demo malicious hosts.",
+    "url_prefixes": [
+      "testsafebrowsing.appspot.com/s/phishing.html",
+      "testsafebrowsing.appspot.com/s/malware.html",
+      "testsafebrowsing.appspot.com/s/malware_in_iframe.html",
+      "testsafebrowsing.appspot.com/s/unwanted.html",
+      "testsafebrowsing.appspot.com/s/bad_login.html",
+      "testsafebrowsing.appspot.com/apiv4/"
+    ],
+    "domains": [
+      "free-gift-claim-sg.top"
+    ]
+  },
+  "confusables": {
+    "doc": "Latin look-alikes. homoglyph = some non-ASCII host label becomes pure [a-z0-9-] after mapping each char through this table, OR a label mixes Latin [a-z] with Cyrillic (U+0400-U+04FF) or Greek (U+0370-U+03FF) letters.",
+    "map": {
+      "а": "a",
+      "е": "e",
+      "о": "o",
+      "р": "p",
+      "с": "c",
+      "у": "y",
+      "х": "x",
+      "і": "i",
+      "ј": "j",
+      "ӏ": "l",
+      "ԁ": "d",
+      "ѕ": "s",
+      "һ": "h",
+      "ԛ": "q",
+      "ԝ": "w",
+      "ү": "y",
+      "ο": "o",
+      "α": "a",
+      "ν": "v",
+      "ι": "i",
+      "κ": "k",
+      "ρ": "p",
+      "υ": "u",
+      "χ": "x",
+      "ɡ": "g",
+      "ı": "i",
+      "ɩ": "i",
+      "ℓ": "l"
+    }
+  }
+}

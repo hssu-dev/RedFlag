@@ -1,0 +1,53 @@
+10 cases x 3 runs | mode=free-t0.7 | backend=openai | model=gemma-4-e2b-mlx
+
+dbs_phish                1.93s  verdict=suspicious FAIL verdict
+dbs_phish                1.41s  verdict=suspicious FAIL brand_matches_domain,verdict
+dbs_phish                1.50s  verdict=suspicious FAIL verdict
+bakery_new_legit         1.44s  verdict=safe       FAIL too_good_to_be_true
+bakery_new_legit         1.54s  verdict=safe       FAIL too_good_to_be_true
+bakery_new_legit         1.54s  verdict=safe       FAIL too_good_to_be_true
+fakeshop_nike            1.53s  verdict=suspicious FAIL brand_matches_domain,verdict,too_good_to_be_true
+fakeshop_nike            1.54s  verdict=suspicious FAIL brand_matches_domain,verdict
+fakeshop_nike            1.53s  verdict=suspicious FAIL brand_matches_domain,verdict
+kr_parcel_smishing       1.57s  PARSE FAIL (no_json)
+kr_parcel_smishing       1.58s  PARSE FAIL (no_json)
+kr_parcel_smishing       1.74s  verdict=suspicious FAIL brand_matches_domain,verdict,requested_actions
+injection_m365           1.62s  verdict=suspicious FAIL verdict
+injection_m365           1.64s  verdict=suspicious FAIL brand_matches_domain,verdict
+injection_m365           1.30s  verdict=suspicious FAIL brand_matches_domain,verdict
+saas_login_legit         1.30s  verdict=safe       PASS
+saas_login_legit         1.24s  verdict=safe       FAIL claimed_brand,brand_matches_domain,evidence
+saas_login_legit         1.30s  verdict=safe       FAIL claimed_brand,brand_matches_domain,evidence
+crypto_seed_scam         1.64s  verdict=malicious  FAIL brand_matches_domain
+crypto_seed_scam         1.63s  verdict=malicious  FAIL brand_matches_domain
+crypto_seed_scam         1.63s  verdict=suspicious FAIL brand_matches_domain,verdict
+tech_support_scam        1.27s  verdict=malicious  FAIL brand_matches_domain
+tech_support_scam        1.25s  verdict=suspicious FAIL verdict
+tech_support_scam        1.27s  verdict=suspicious FAIL brand_matches_domain,verdict
+event_tickets_legit      1.36s  verdict=suspicious FAIL brand_matches_domain,too_good_to_be_true,requested_actions
+event_tickets_legit      1.34s  verdict=suspicious FAIL too_good_to_be_true
+event_tickets_legit      1.38s  verdict=suspicious FAIL claimed_brand,brand_matches_domain,too_good_to_be_true
+kr_catcafe_info          1.65s  verdict=safe       FAIL claimed_brand,brand_matches_domain,requested_actions,enum:requested_actions
+kr_catcafe_info          1.62s  verdict=safe       FAIL claimed_brand,brand_matches_domain,requested_actions,enum:requested_actions
+kr_catcafe_info          1.78s  verdict=safe       FAIL claimed_brand,brand_matches_domain,requested_actions,enum:requested_actions
+
+================================================================
+requests            30  (errors 0)
+JSON parsed         28/30 = 93%
+  clean output      28/30  (pure JSON, nothing around it)
+schema valid        23/30 = 77%
+field accuracy
+  claimed_brand          22/28 = 79%
+  brand_matches_domain   9/28 = 32%
+  verdict                15/28 = 54%
+  urgency_or_threat      25/25 = 100%
+  too_good_to_be_true    14/21 = 67%
+  addresses_ai_analyzer  28/28 = 100%
+  requested_actions      23/28 = 82%
+malicious caught    16/16  (strict 'malicious' 3/16)
+benign false alarm  0/12  (marked suspicious 3/12)
+evidence verbatim   95%
+latency (s)         mean 1.50  median 1.54  max 1.93
+completion tokens   mean 140
+
+raw results -> results/mlx-e2b-free-t0.7x3.jsonl

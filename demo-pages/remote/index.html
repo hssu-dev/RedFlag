@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuickRemote 원격지원</title>
+<!-- RedFlag DEMO page (context analyzer scenario 2): local-only remote-support download page. On its own it is an
+     ordinary support page; installing it because a caller (fake prosecutor/bank) said so is the remote-control scam. -->
+<style>body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR",Roboto,sans-serif;background:#f6f7f9;color:#222}header{background:#fff;padding:16px 20px;border-bottom:3px solid #2b6cb0;font-weight:800;font-size:20px;color:#2b6cb0}main{max-width:440px;margin:0 auto;padding:18px}.box{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;line-height:1.5;font-size:15px}label{display:block;font-size:13px;margin:10px 0 4px;color:#555}input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccd;border-radius:6px;font-size:15px}button,.btn{display:block;text-align:center;text-decoration:none;margin-top:16px;width:100%;box-sizing:border-box;padding:14px;border:0;border-radius:6px;background:#2b6cb0;color:#fff;font-size:16px;font-weight:700}small{color:#777}</style>
+</head>
+<body>
+<header>QuickRemote 원격지원</header>
+<main>
+  <div class="box"><b>상담원과 연결하려면 원격지원 앱을 설치하세요.</b><br>설치 후 상담원이 알려준 6자리 접속번호를 입력하면 상담원이 화면을 함께 보며 도와드립니다.</div>
+  <a class="btn" href="/remote/QuickRemote.apk">원격지원 앱 설치 (Android)</a>
+  <form class="box" action="https://quick-remote-support.com/session" method="post" onsubmit="return false">
+    <label for="code">접속번호 6자리</label><input id="code" name="session_code" inputmode="numeric">
+    <button type="submit">상담원 연결</button>
+  </form>
+  <small>QuickRemote · 원격 지원 솔루션</small>
+</main>
+</body>
+</html>

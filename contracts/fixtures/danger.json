@@ -1,0 +1,120 @@
+{
+  "schema_version": "1",
+  "id": "5e8cdcba-79d4-55fe-bfe5-e83087055b28",
+  "mode": "lite",
+  "status": "complete",
+  "url": "https://singpass-secure-update.com/android",
+  "final_url": "https://singpass-secure-update.com/android",
+  "registrable_domain": "singpass-secure-update.com",
+  "score": 75,
+  "level": "danger",
+  "escalate": false,
+  "headline": {
+    "en": "This page is impersonating Singpass",
+    "ko": "Singpass 사칭이 의심되는 페이지예요"
+  },
+  "red_flags": [
+    {
+      "rule_id": "brand_mismatch_known_brand",
+      "severity": "high",
+      "source": "gemma+rule",
+      "weight": 40,
+      "title": {
+        "en": "Pretends to be Singpass on a different domain",
+        "ko": "Singpass 공식 주소가 아닌데 Singpass인 척해요"
+      },
+      "evidence": "the current Singpass app will stop working on 6 November."
+    },
+    {
+      "rule_id": "new_domain",
+      "severity": "medium",
+      "source": "signal+rule",
+      "weight": 25,
+      "title": {
+        "en": "This site was created only 7 days ago",
+        "ko": "만들어진 지 7일밖에 안 된 사이트예요"
+      },
+      "evidence": "domain_age_days: 7"
+    },
+    {
+      "rule_id": "urgency_or_threat",
+      "severity": "low",
+      "source": "gemma+rule",
+      "weight": 10,
+      "title": {
+        "en": "Pressures you to act right now",
+        "ko": "지금 당장 하라고 재촉해요"
+      },
+      "evidence": null
+    }
+  ],
+  "brand": {
+    "claimed": "Singpass",
+    "official_domains": [
+      "singpass.gov.sg"
+    ],
+    "matches": false
+  },
+  "signals": {
+    "domain_age_days": 7,
+    "tls_issuer": "Let's Encrypt",
+    "cert_age_days": 6,
+    "safe_browsing": "no_match",
+    "redirect_count": 0,
+    "punycode": false,
+    "homoglyph": false,
+    "forms": [],
+    "external_link_domains": [
+      "singpass.gov.sg"
+    ]
+  },
+  "features": {
+    "evidence": [
+      "the current Singpass app will stop working on 6 November."
+    ],
+    "claimed_brand": "Singpass",
+    "brand_matches_domain": "no",
+    "page_type": "download",
+    "requested_actions": [
+      "install_app"
+    ],
+    "urgency_or_threat": true,
+    "too_good_to_be_true": false,
+    "addresses_ai_analyzer": false,
+    "verdict": "malicious",
+    "confidence": "high"
+  },
+  "cloaking": {
+    "suspected": false,
+    "detail": null
+  },
+  "trace": [
+    {
+      "t_ms": 0,
+      "step": "gate",
+      "detail": "unknown domain"
+    },
+    {
+      "t_ms": 1500,
+      "step": "extract",
+      "detail": "0 forms, 0 hidden text"
+    },
+    {
+      "t_ms": 1590,
+      "step": "signals",
+      "detail": "domain age 7 days"
+    },
+    {
+      "t_ms": 3360,
+      "step": "gemma",
+      "detail": "claimed_brand=Singpass"
+    }
+  ],
+  "engine": {
+    "model": "gemma-4-e4b",
+    "runtime": "litert-lm",
+    "think": false
+  },
+  "latency_ms": 3380,
+  "created_at": "2026-11-05T01:15:11Z"
+}

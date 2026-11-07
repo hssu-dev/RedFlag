@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>안전거래 결제 | SafePay</title>
+<!-- RedFlag DEMO page (context analyzer scenario 1): local-only fake used-trade "safe payment" page.
+     The page alone looks like an ordinary checkout; the chat that sent it is what gives it away. -->
+<style>body{margin:0;font-family:"Apple SD Gothic Neo","Noto Sans KR",Roboto,sans-serif;background:#f6f7f9;color:#222}header{background:#fff;padding:16px 20px;border-bottom:3px solid #2b6cb0;font-weight:800;font-size:20px;color:#2b6cb0}main{max-width:440px;margin:0 auto;padding:18px}.box{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;line-height:1.5;font-size:15px}label{display:block;font-size:13px;margin:10px 0 4px;color:#555}input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccd;border-radius:6px;font-size:15px}button,.btn{display:block;text-align:center;text-decoration:none;margin-top:16px;width:100%;box-sizing:border-box;padding:14px;border:0;border-radius:6px;background:#2b6cb0;color:#fff;font-size:16px;font-weight:700}small{color:#777}</style>
+</head>
+<body>
+<header>SafePay 안전거래</header>
+<main>
+  <div class="box"><b>구매 확정 전까지 결제 금액은 SafePay가 안전하게 보관합니다.</b><br>상품을 받은 뒤 구매 확정을 누르면 판매자에게 정산돼요.</div>
+  <div class="box">상품: 아이폰 15 Pro 256GB (미개봉)<br>판매자: 하늘바다77<br>결제 금액: <b>980,000원</b> (안전거래 수수료 무료)</div>
+  <form class="box" action="https://safepay-escrow.shop/checkout" method="post" onsubmit="return false">
+    <label for="n">구매자 이름</label><input id="n" name="name">
+    <label for="p">휴대폰 번호</label><input id="p" name="phone" type="tel">
+    <label for="c">카드번호</label><input id="c" name="cardnumber" autocomplete="cc-number">
+    <label for="e">유효기간</label><input id="e" name="exp" autocomplete="cc-exp">
+    <label for="v">CVC</label><input id="v" name="cvc" autocomplete="cc-csc">
+    <button type="submit">980,000원 안전결제</button>
+  </form>
+  <small>SafePay 안전거래 · 고객센터 1588-0000</small>
+</main>
+</body>
+</html>

@@ -1,0 +1,52 @@
+: redflag sse
+
+event: trace
+data: {"t_ms": 0, "step": "start", "detail": "cloud analysis of https://dbs-secure-verify.top/login?ref=sms [DEMO_MODE]"}
+
+event: trace
+data: {"t_ms": 0, "step": "cache", "detail": "miss"}
+
+event: trace
+data: {"t_ms": 31, "step": "safe_browsing", "detail": "no_match (stub)"}
+
+event: trace
+data: {"t_ms": 31, "step": "rdap", "detail": "dbs-secure-verify.top: registered 4 days ago (demo override)"}
+
+event: trace
+data: {"t_ms": 31, "step": "cert", "detail": "dbs-secure-verify.top: Let's Encrypt, newest cert 3 days old (demo override)"}
+
+event: trace
+data: {"t_ms": 1475, "step": "sandbox_browse", "detail": "https://dbs-secure-verify.top/login?ref=sms | title 'DBS digibank | Secure Login' | 1 form(s), 1 sensitive | hidden text 0 chars | 0 redirect(s)"}
+
+event: trace
+data: {"t_ms": 1749, "step": "opus", "detail": "round 1: request sent (claude-opus-5-5, effort=medium)"}
+
+event: trace
+data: {"t_ms": 5205, "step": "web_search", "detail": "query: DBS digibank official website"}
+
+event: trace
+data: {"t_ms": 5205, "step": "opus", "detail": "round 1: stop_reason=tool_use, tools=['rdap']"}
+
+event: trace
+data: {"t_ms": 7627, "step": "rdap", "detail": "api-collect.click: age unknown (not found in registry RDAP)"}
+
+event: trace
+data: {"t_ms": 7632, "step": "opus", "detail": "round 2: request sent (claude-opus-5-5, effort=medium)"}
+
+: keepalive
+
+event: trace
+data: {"t_ms": 14088, "step": "web_search", "detail": "9 results for 'DBS digibank official website': dbs.com.hk, dbs.com, x.com, dbs.com.sg, dbs.bank.in"}
+
+event: trace
+data: {"t_ms": 14088, "step": "opus", "detail": "round 2: stop_reason=tool_use, tools=['submit_report']"}
+
+event: trace
+data: {"t_ms": 14089, "step": "submit_report", "detail": "claimed_brand=DBS, verdict=malicious, ai_text=False, official=dbs.com.sg"}
+
+event: trace
+data: {"t_ms": 14095, "step": "scoring", "detail": "score 95 -> critical (brand_mismatch_known_brand, new_domain, sensitive_form_cross_site, urgency_or_threat)"}
+
+event: report
+data: {"schema_version": "1", "id": "21f14a4b-117e-43c8-91f8-188e8e391678", "mode": "cloud", "status": "complete", "url": "https://dbs-secure-verify.top/login?ref=sms", "final_url": "https://dbs-secure-verify.top/login?ref=sms", "registrable_domain": "dbs-secure-verify.top", "score": 95, "level": "critical", "escalate": false, "headline": {"en": "This page is impersonating DBS", "ko": "DBS 사칭이 의심되는 페이지예요"}, "red_flags": [{"rule_id": "brand_mismatch_known_brand", "severity": "high", "source": "opus+rule", "weight": 40, "title": {"en": "Pretends to be DBS on a different domain", "ko": "DBS 공식 주소가 아닌데 DBS인 척해요"}, "evidence": "Your digibank access has been temporarily suspended due to unusual sign-in activity."}, {"rule_id": "new_domain", "severity": "medium", "source": "signal+rule", "weight": 25, "title": {"en": "This site was created only 4 days ago", "ko": "만들어진 지 4일밖에 안 된 사이트예요"}, "evidence": "domain_age_days: 4"}, {"rule_id": "sensitive_form_cross_site", "severity": "medium", "source": "signal+rule", "weight": 20, "title": {"en": "Sends what you type to another site (api-collect.click)", "ko": "입력한 정보를 다른 사이트(api-collect.click)로 보내요"}, "evidence": "form action: api-collect.click"}, {"rule_id": "urgency_or_threat", "severity": "low", "source": "opus+rule", "weight": 10, "title": {"en": "Pressures you to act right now", "ko": "지금 당장 하라고 재촉해요"}, "evidence": null}], "brand": {"claimed": "DBS", "official_domains": ["dbs.com.sg", "dbs.com", "posb.com.sg"], "matches": false}, "signals": {"domain_age_days": 4, "tls_issuer": "Let's Encrypt", "cert_age_days": 3, "safe_browsing": "no_match", "redirect_count": 0, "punycode": false, "homoglyph": false, "forms": [{"action_domain": "api-collect.click", "same_site": false, "sensitive_fields": ["password", "secret"]}], "external_link_domains": ["dbs.com.sg"]}, "features": {"evidence": ["Your digibank access has been temporarily suspended due to unusual sign-in activity.", "verify your identity within 24 hours or your account will be permanently closed.", "© DBS Bank Ltd. All rights reserved."], "claimed_brand": "DBS", "brand_matches_domain": "no", "page_type": "login", "requested_actions": ["enter_password"], "urgency_or_threat": true, "too_good_to_be_true": false, "addresses_ai_analyzer": false, "verdict": "malicious", "confidence": "high", "form_posts_cross_site": true, "downloads_attempted": false, "official_domain_found": "dbs.com.sg"}, "cloaking": {"suspected": false, "detail": null}, "trace": [{"t_ms": 0, "step": "start", "detail": "cloud analysis of https://dbs-secure-verify.top/login?ref=sms [DEMO_MODE]"}, {"t_ms": 0, "step": "cache", "detail": "miss"}, {"t_ms": 31, "step": "safe_browsing", "detail": "no_match (stub)"}, {"t_ms": 31, "step": "rdap", "detail": "dbs-secure-verify.top: registered 4 days ago (demo override)"}, {"t_ms": 31, "step": "cert", "detail": "dbs-secure-verify.top: Let's Encrypt, newest cert 3 days old (demo override)"}, {"t_ms": 1475, "step": "sandbox_browse", "detail": "https://dbs-secure-verify.top/login?ref=sms | title 'DBS digibank | Secure Login' | 1 form(s), 1 sensitive | hidden text 0 chars | 0 redirect(s)"}, {"t_ms": 1749, "step": "opus", "detail": "round 1: request sent (claude-opus-5-5, effort=medium)"}, {"t_ms": 5205, "step": "web_search", "detail": "query: DBS digibank official website"}, {"t_ms": 5205, "step": "opus", "detail": "round 1: stop_reason=tool_use, tools=['rdap']"}, {"t_ms": 7627, "step": "rdap", "detail": "api-collect.click: age unknown (not found in registry RDAP)"}, {"t_ms": 7632, "step": "opus", "detail": "round 2: request sent (claude-opus-5-5, effort=medium)"}, {"t_ms": 14088, "step": "web_search", "detail": "9 results for 'DBS digibank official website': dbs.com.hk, dbs.com, x.com, dbs.com.sg, dbs.bank.in"}, {"t_ms": 14088, "step": "opus", "detail": "round 2: stop_reason=tool_use, tools=['submit_report']"}, {"t_ms": 14089, "step": "submit_report", "detail": "claimed_brand=DBS, verdict=malicious, ai_text=False, official=dbs.com.sg"}, {"t_ms": 14095, "step": "scoring", "detail": "score 95 -> critical (brand_mismatch_known_brand, new_domain, sensitive_form_cross_site, urgency_or_threat)"}], "engine": {"model": "claude-opus-5-5", "runtime": "anthropic-messages-api", "think": true}, "latency_ms": 14095, "created_at": "2026-11-03T18:51:12Z"}
+

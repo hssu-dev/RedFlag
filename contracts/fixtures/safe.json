@@ -1,0 +1,85 @@
+{
+  "schema_version": "1",
+  "id": "169b22e5-6f22-5eb2-8ff7-cf0e3ddfa517",
+  "mode": "lite",
+  "status": "complete",
+  "url": "https://nyangigarden.kr/",
+  "final_url": "https://nyangigarden.kr/",
+  "registrable_domain": "nyangigarden.kr",
+  "score": 0,
+  "level": "safe",
+  "escalate": false,
+  "headline": {
+    "en": "No red flags found",
+    "ko": "위험 신호를 찾지 못했어요"
+  },
+  "red_flags": [],
+  "brand": {
+    "claimed": "냥이정원",
+    "official_domains": [],
+    "matches": null
+  },
+  "signals": {
+    "domain_age_days": 730,
+    "tls_issuer": "Let's Encrypt",
+    "cert_age_days": 60,
+    "safe_browsing": "no_match",
+    "redirect_count": 0,
+    "punycode": false,
+    "homoglyph": false,
+    "forms": [],
+    "external_link_domains": [
+      "instagram.com",
+      "map.naver.com"
+    ]
+  },
+  "features": {
+    "evidence": [
+      "냥이정원은 홍대입구역 3번 출구에서 도보 5분 거리에 있는 고양이 카페입니다."
+    ],
+    "claimed_brand": "냥이정원",
+    "brand_matches_domain": "yes",
+    "page_type": "info",
+    "requested_actions": [
+      "none"
+    ],
+    "urgency_or_threat": false,
+    "too_good_to_be_true": false,
+    "addresses_ai_analyzer": false,
+    "verdict": "safe",
+    "confidence": "high"
+  },
+  "cloaking": {
+    "suspected": false,
+    "detail": null
+  },
+  "trace": [
+    {
+      "t_ms": 0,
+      "step": "gate",
+      "detail": "unknown domain"
+    },
+    {
+      "t_ms": 1180,
+      "step": "extract",
+      "detail": "0 forms, 0 hidden text"
+    },
+    {
+      "t_ms": 1260,
+      "step": "signals",
+      "detail": "domain age 730 days"
+    },
+    {
+      "t_ms": 2390,
+      "step": "gemma",
+      "detail": "claimed_brand=냥이정원"
+    }
+  ],
+  "engine": {
+    "model": "gemma-4-e4b",
+    "runtime": "litert-lm",
+    "think": false
+  },
+  "latency_ms": 2410,
+  "created_at": "2026-11-05T01:10:02Z"
+}
